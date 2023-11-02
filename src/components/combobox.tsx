@@ -1,8 +1,8 @@
 import { Check, ChevronsUpDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import * as React from "react";
 
-import { cn } from "@/utils/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/popover";
 import { sampleBooks } from "@/utils/apis/books/sample-data";
 
+import { cn } from "@/utils/utils";
+
 interface ComboboxDatas {
   id: number;
   title: string;
@@ -32,6 +34,7 @@ const tryBook = sampleBooks.map((book) => {
 });
 
 const Combobox = ({ placeholder = "Search..." }: ComboboxProps) => {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   const [datas, setDatas] = React.useState<ComboboxDatas[]>([]);
@@ -84,6 +87,7 @@ const Combobox = ({ placeholder = "Search..." }: ComboboxProps) => {
                   setValue(currentValue === value ? "" : currentValue);
                   setDatas([]);
                   setOpen(false);
+                  navigate(`/books/${data.id}`);
                 }}
               >
                 <Check

@@ -5,30 +5,39 @@ import {
 } from "react-router-dom";
 
 import Home from "@/pages";
-import Profile from "@/pages/profile";
 import Login from "@/pages/auth/login";
 import Register from "@/pages/auth/register";
+import Profile from "@/pages/users/profile";
+import EditProfile from "@/pages/users/edit-profile";
 import Books from "@/pages/books";
 import DetailBook from "@/pages/books/detail";
 import History from "@/pages/borrow/history";
 
+import { useToken } from "@/utils/contexts/token";
+
 const App = () => {
+  const { token } = useToken();
+
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Home />,
     },
     {
-      path: "/profile",
-      element: <Profile />,
-    },
-    {
       path: "/login",
-      element: <Login />,
+      element: token ? <Navigate to="/" /> : <Login />,
     },
     {
       path: "/register",
-      element: <Register />,
+      element: token ? <Navigate to="/" /> : <Register />,
+    },
+    {
+      path: "/profile",
+      element: !token ? <Navigate to="/login" /> : <Profile />,
+    },
+    {
+      path: "/edit-profile",
+      element: !token ? <Navigate to="/login" /> : <EditProfile />,
     },
     {
       path: "/books",
@@ -40,7 +49,7 @@ const App = () => {
     },
     {
       path: "/history-borrow",
-      element: <History />,
+      element: !token ? <Navigate to="/login" /> : <History />,
     },
     {
       path: "*",
