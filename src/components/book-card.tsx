@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-import { Books } from "@/utils/apis/books/types";
+import { Book } from "@/utils/apis/books/types";
 
 export interface BookCardProps {
-  data: Books;
+  data: Book;
   navigate: string;
 }
 
@@ -21,8 +21,10 @@ const BookCard = (props: BookCardProps) => {
           alt={data.title}
         />
       </figure>
-      <p className="font-bold text-lg tracking-wide">{data.title}</p>
-      <p className="text-neutral-400 text-sm">{data.author}</p>
+      <p className="font-bold text-lg tracking-wide text-center">
+        {data.title}
+      </p>
+      <p className="text-neutral-400 text-sm text-center">{data.author}</p>
     </Link>
   );
 };

@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 
 import Home from "@/pages";
+import NotFound from "@/pages/404";
 import Login from "@/pages/auth/login";
 import Register from "@/pages/auth/register";
 import Profile from "@/pages/users/profile";
@@ -53,7 +54,7 @@ const App = () => {
     },
     {
       path: "*",
-      element: <div>404 page not found</div>,
+      element: <NotFound />,
     },
   ]);
 

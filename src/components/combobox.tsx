@@ -16,9 +16,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { sampleBooks } from "@/utils/apis/books/sample-data";
 
 import { cn } from "@/utils/utils";
+import { getBooks } from "@/utils/apis/books";
 
 interface ComboboxDatas {
   id: number;
@@ -28,10 +28,6 @@ interface ComboboxDatas {
 interface ComboboxProps {
   placeholder?: string;
 }
-
-const tryBook = sampleBooks.map((book) => {
-  return { id: +book.id, title: book.title };
-});
 
 const Combobox = ({ placeholder = "Search..." }: ComboboxProps) => {
   const navigate = useNavigate();
@@ -43,10 +39,13 @@ const Combobox = ({ placeholder = "Search..." }: ComboboxProps) => {
     if (!query) {
       return;
     }
-    const filterData = tryBook.filter((book) =>
-      book.title.toLowerCase().includes(query)
-    );
-    setDatas(filterData);
+
+    const result = await getBooks({ query });
+    const newDatas =
+      result.payload?.datas.map((data) => {
+        return { id: data.id, title: data.title };
+      }) ?? [];
+    setDatas(newDatas);
   }, []);
 
   const getSuggestionsDebounce = React.useMemo(

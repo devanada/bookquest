@@ -18,8 +18,8 @@ const Home = () => {
 
   async function fetchPopularBooks() {
     try {
-      const result = await getBooks({});
-      setPopularBooks(result);
+      const result = await getBooks({ limit: 5 });
+      setPopularBooks(result.payload.datas);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -31,8 +31,8 @@ const Home = () => {
 
   async function fetchNewBooks() {
     try {
-      const result = await getBooks({});
-      setNewBooks(result);
+      const result = await getBooks({ sort: "New", limit: 5 });
+      setNewBooks(result.payload.datas);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -47,20 +47,6 @@ const Home = () => {
       <div className="min-h-[50vh] w-full bg-neutral-500">
         <p>Hero</p>
       </div>
-      <div className="flex justify-between my-9 w-full items-center">
-        <p className="font-semibold text-lg tracking-wider">Popular</p>
-        <Link className="text-sm tracking-wide" to="/books?sort=Popular">
-          Show all
-        </Link>
-      </div>
-      <div className="flex gap-6">
-        {popularBooks.map((book) => (
-          <BookCard key={book.id} data={book} navigate={`/books/${book.id}`} />
-        ))}
-      </div>
-      <div className="min-h-[40vh] w-full bg-neutral-500 my-9">
-        <p>Featured book</p>
-      </div>
       <div className="flex justify-between my-9 w-full">
         <p className="font-semibold text-lg tracking-wider">
           New Release Books
@@ -69,8 +55,22 @@ const Home = () => {
           Show all
         </Link>
       </div>
-      <div className="flex gap-6">
+      <div className="flex gap-6 overflow-x-auto">
         {newBooks.map((book) => (
+          <BookCard key={book.id} data={book} navigate={`/books/${book.id}`} />
+        ))}
+      </div>
+      <div className="min-h-[40vh] w-full bg-neutral-500 my-9">
+        <p>Featured book</p>
+      </div>
+      <div className="flex justify-between my-9 w-full items-center">
+        <p className="font-semibold text-lg tracking-wider">Popular</p>
+        <Link className="text-sm tracking-wide" to="/books?sort=Popular">
+          Show all
+        </Link>
+      </div>
+      <div className="flex gap-6 overflow-x-auto">
+        {popularBooks.map((book) => (
           <BookCard key={book.id} data={book} navigate={`/books/${book.id}`} />
         ))}
       </div>

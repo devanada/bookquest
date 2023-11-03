@@ -14,13 +14,13 @@ const Profile = () => {
   const [recentlyBorrow, setRecentlyBorrow] = useState<Book[]>([]);
 
   useEffect(() => {
-    fetchData();
+    user.role === "user" && fetchData();
   }, []);
 
   async function fetchData() {
     try {
-      const result = await getBooks({});
-      setRecentlyBorrow(result);
+      const result = await getBooks();
+      setRecentlyBorrow(result.payload.datas);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -41,7 +41,7 @@ const Profile = () => {
           />
         </div>
         <p className="font-bold text-2xl">{user.full_name}</p>
-        <Button>
+        <Button asChild>
           <Link to="/edit-profile">Edit Profile</Link>
         </Button>
       </div>

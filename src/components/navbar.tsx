@@ -47,9 +47,19 @@ const Navbar = () => {
                   <DropdownMenuItem onClick={() => navigate("/profile")}>
                     Profile
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate("/history-borrow")}>
-                    My Books
-                  </DropdownMenuItem>
+                  {user.role === "user" ? (
+                    <DropdownMenuItem
+                      onClick={() => navigate("/history-borrow")}
+                    >
+                      My Books
+                    </DropdownMenuItem>
+                  ) : (
+                    <DropdownMenuItem
+                      onClick={() => navigate("/history-borrow")}
+                    >
+                      Dashboard
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem onClick={() => handleLogout()}>
                     Logout
                   </DropdownMenuItem>

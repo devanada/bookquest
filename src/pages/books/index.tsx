@@ -1,4 +1,5 @@
 import { useSearchParams } from "react-router-dom";
+
 import { useEffect, useState } from "react";
 
 import { useToast } from "@/components/ui/use-toast";
@@ -6,22 +7,31 @@ import BookCard from "@/components/book-card";
 import Layout from "@/components/layout";
 
 import { Book, getBooks } from "@/utils/apis/books";
+import { Meta } from "@/utils/types/api";
+import Pagination from "@/components/pagination";
 
 const AllBook = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
 
   const [books, setBooks] = useState<Book[]>([]);
+  const [meta, setMeta] = useState<Meta>();
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [searchParams]);
 
   async function fetchData() {
-    console.log(searchParams.get("sort"));
+    let query: { [key: string]: string } = {};
+    for (const entry of searchParams.entries()) {
+      query[entry[0]] = entry[1];
+    }
+
     try {
-      const result = await getBooks({});
-      setBooks(result);
+      const result = await getBooks({ ...query });
+      const { datas, ...rest } = result.payload;
+      setBooks(datas);
+      setMeta(rest);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",
@@ -31,13 +41,24 @@ const AllBook = () => {
     }
   }
 
+  function handlePrevNextPage(page: string | number) {
+    searchParams.set("page", String(page));
+    setSearchParams(searchParams);
+  }
+
   return (
     <Layout>
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {books.map((book) => (
           <BookCard key={book.id} data={book} navigate={`/books/${book.id}`} />
         ))}
       </div>
+      <Pagination
+        meta={meta}
+        onClickPrevious={() => handlePrevNextPage(meta?.currentPage! - 1)}
+        onClickNext={() => handlePrevNextPage(meta?.currentPage! + 1)}
+        onClickPage={() => {}}
+      />
     </Layout>
   );
 };
