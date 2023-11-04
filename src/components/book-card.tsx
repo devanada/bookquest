@@ -11,14 +11,16 @@ const BookCard = (props: BookCardProps) => {
   const { data, navigate } = props;
   return (
     <Link
-      className="flex flex-col p-4 w-fit h-fit items-center gap-3"
+      className="flex flex-col p-4 w-[250px] h-fit items-center gap-3"
       to={navigate}
     >
-      <figure className="shadow-md shadow-neutral-300">
+      <figure className="overflow-hidden shadow-md shadow-neutral-300">
         <img
-          className="aspect-[3/4] object-cover"
+          className="h-auto w-auto object-cover aspect-[3/4]"
           src={data.cover_image}
           alt={data.title}
+          width={250}
+          height={330}
         />
       </figure>
       <p className="font-bold text-lg tracking-wide text-center">

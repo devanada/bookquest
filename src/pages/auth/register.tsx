@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Loader2 } from "lucide-react";
 
 import {
   Card,
@@ -10,9 +11,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Form, FormField } from "@/components/ui/form";
+import { CustomFormField } from "@/components/custom-formfield";
 import { Button } from "@/components/ui/button";
-import FormInput from "@/components/form-input";
+import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import Layout from "@/components/layout";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -24,6 +26,14 @@ const Register = () => {
 
   const form = useForm<RegisterType>({
     resolver: zodResolver(registerSchema),
+    defaultValues: {
+      full_name: "",
+      email: "",
+      password: "",
+      repassword: "",
+      address: "",
+      phone_number: "",
+    },
   });
 
   async function onSubmit(data: RegisterType) {
@@ -43,7 +53,7 @@ const Register = () => {
   }
 
   return (
-    <Layout center>
+    <Layout centerX centerY>
       <Card className="w-1/2">
         <CardHeader>
           <CardTitle>Register</CardTitle>
@@ -54,73 +64,75 @@ const Register = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
+              <CustomFormField
                 control={form.control}
                 name="full_name"
-                render={({ field }) => (
-                  <FormInput
-                    label="Full Name"
-                    placeholder="John Doe"
-                    {...field}
-                  />
-                )}
-              />
-              <FormField
+                label="Full Name"
+              >
+                {(field) => <Input placeholder="John Doe" {...field} />}
+              </CustomFormField>
+              <CustomFormField
                 control={form.control}
                 name="email"
-                render={({ field }) => (
-                  <FormInput
-                    label="Email"
-                    placeholder="name@mail.com"
-                    {...field}
-                  />
+                label="Email"
+              >
+                {(field) => (
+                  <Input placeholder="name@mail.com" type="email" {...field} />
                 )}
-              />
-              <FormField
+              </CustomFormField>
+              <CustomFormField
                 control={form.control}
                 name="password"
-                render={({ field }) => (
-                  <FormInput
-                    label="Password"
-                    placeholder="Password"
-                    type="password"
-                    {...field}
-                  />
+                label="Password"
+              >
+                {(field) => (
+                  <Input placeholder="Password" type="password" {...field} />
                 )}
-              />
-              <FormField
+              </CustomFormField>
+              <CustomFormField
                 control={form.control}
                 name="repassword"
-                render={({ field }) => (
-                  <FormInput
-                    label="Retype Password"
+                label="Retype Password"
+              >
+                {(field) => (
+                  <Input
                     placeholder="Retype Password"
                     type="password"
                     {...field}
                   />
                 )}
-              />
-              <FormField
+              </CustomFormField>
+              <CustomFormField
                 control={form.control}
                 name="address"
-                render={({ field }) => (
-                  <FormInput label="Address" placeholder="Address" {...field} />
-                )}
-              />
-              <FormField
+                label="Address"
+              >
+                {(field) => <Input placeholder="Address" {...field} />}
+              </CustomFormField>
+              <CustomFormField
                 control={form.control}
                 name="phone_number"
-                render={({ field }) => (
-                  <FormInput
-                    label="Phone Number"
-                    placeholder="Phone Number"
-                    type="number"
-                    {...field}
-                  />
+                label="Phone Number"
+              >
+                {(field) => (
+                  <Input placeholder="Phone Number" type="tel" {...field} />
                 )}
-              />
+              </CustomFormField>
               <CardFooter className="flex justify-center">
-                <Button type="submit">Submit</Button>
+                <Button
+                  type="submit"
+                  disabled={form.formState.isSubmitting}
+                  aria-disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Please wait
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
               </CardFooter>
             </form>
           </Form>

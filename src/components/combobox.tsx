@@ -1,7 +1,7 @@
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
-import * as React from "react";
+import { useCallback, useState, useMemo } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -31,11 +31,12 @@ interface ComboboxProps {
 
 const Combobox = ({ placeholder = "Search..." }: ComboboxProps) => {
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
-  const [datas, setDatas] = React.useState<ComboboxDatas[]>([]);
 
-  const getSuggestions = React.useCallback(async function (query: string) {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const [datas, setDatas] = useState<ComboboxDatas[]>([]);
+
+  const getSuggestions = useCallback(async function (query: string) {
     if (!query) {
       return;
     }
@@ -48,7 +49,7 @@ const Combobox = ({ placeholder = "Search..." }: ComboboxProps) => {
     setDatas(newDatas);
   }, []);
 
-  const getSuggestionsDebounce = React.useMemo(
+  const getSuggestionsDebounce = useMemo(
     () => debounce(getSuggestions, 1000),
     [getSuggestions]
   );

@@ -2,31 +2,29 @@ import * as z from "zod";
 
 export const loginSchema = z.object({
   email: z
-    .string({
-      required_error: "Email is required",
-    })
+    .string()
+    .min(1, { message: "Email is required" })
     .email("Not a valid email"),
-  password: z.string({ required_error: "Password is required" }),
+  password: z.string().min(1, { message: "Password is required" }),
 });
 
 export const registerSchema = z
   .object({
-    full_name: z.string({ required_error: "Full name is required" }),
+    full_name: z.string().min(1, { message: "Full name is required" }),
     email: z
-      .string({
-        required_error: "Email is required",
-      })
+      .string()
+      .min(1, { message: "Email is required" })
       .email("Not a valid email"),
     password: z
-      .string({ required_error: "Password is required" })
-      .min(6, { message: "Password minimum length is 6" }),
+      .string()
+      .min(6, { message: "Password must be at least 6 characters" }),
     repassword: z
-      .string({ required_error: "Password is required" })
-      .min(6, { message: "Retype password minimum length is 6" }),
+      .string()
+      .min(6, { message: "Retype password must be at least 6 characters" }),
     role: z.string().default("user"),
-    address: z.string({ required_error: "Address is required" }),
+    address: z.string().min(1, { message: "Address is required" }),
     phone_number: z
-      .string({ required_error: "Phone number is required" })
+      .string()
       .min(7, { message: "Phone Number minimum length is 7" }),
   })
   .refine((data) => data.password === data.repassword, {

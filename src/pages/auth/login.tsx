@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Loader2 } from "lucide-react";
 
 import {
   Card,
@@ -10,9 +11,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Form, FormField } from "@/components/ui/form";
+import { CustomFormField } from "@/components/custom-formfield";
 import { Button } from "@/components/ui/button";
-import FormInput from "@/components/form-input";
+import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import Layout from "@/components/layout";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -26,6 +28,10 @@ const Login = () => {
 
   const form = useForm<LoginType>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   async function onSubmit(data: LoginType) {
@@ -46,7 +52,7 @@ const Login = () => {
   }
 
   return (
-    <Layout center>
+    <Layout centerX centerY>
       <Card className="w-1/2">
         <CardHeader>
           <CardTitle>Login</CardTitle>
@@ -55,31 +61,39 @@ const Login = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
+              <CustomFormField
                 control={form.control}
                 name="email"
-                render={({ field }) => (
-                  <FormInput
-                    label="Email"
-                    placeholder="name@mail.com"
-                    {...field}
-                  />
+                label="Email"
+              >
+                {(field) => (
+                  <Input {...field} placeholder="name@mail.com" type="email" />
                 )}
-              />
-              <FormField
+              </CustomFormField>
+              <CustomFormField
                 control={form.control}
                 name="password"
-                render={({ field }) => (
-                  <FormInput
-                    label="Password"
-                    placeholder="password"
-                    type="password"
-                    {...field}
-                  />
+                label="Password"
+              >
+                {(field) => (
+                  <Input {...field} placeholder="Password" type="password" />
                 )}
-              />
+              </CustomFormField>
               <CardFooter className="flex justify-center">
-                <Button type="submit">Submit</Button>
+                <Button
+                  type="submit"
+                  disabled={form.formState.isSubmitting}
+                  aria-disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Please wait
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
               </CardFooter>
             </form>
           </Form>

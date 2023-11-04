@@ -5,14 +5,15 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 export const profileUpdateSchema = z.object({
   email: z
-    .string({
-      required_error: "Email is required",
-    })
+    .string()
+    .min(1, { message: "Email is required" })
     .email("Not a valid email"),
-  full_name: z.string({ required_error: "Full name is required" }),
-  password: z.string({ required_error: "Password is required" }),
-  phone_number: z.string({ required_error: "Phone number is required" }),
-  address: z.string({ required_error: "Address is required" }),
+  full_name: z.string().min(1, { message: "Full name is required" }),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters" }),
+  phone_number: z.string().min(1, { message: "Phone number is required" }),
+  address: z.string().min(1, { message: "Address is required" }),
   profile_picture: z
     .any()
     .refine(

@@ -6,6 +6,7 @@ import Layout from "@/components/layout";
 import { toast } from "@/components/ui/use-toast";
 
 import { Book, getBooks } from "@/utils/apis/books";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const Home = () => {
   const [popularBooks, setPopularBooks] = useState<Book[]>([]);
@@ -55,10 +56,19 @@ const Home = () => {
           Show all
         </Link>
       </div>
-      <div className="flex gap-6 overflow-x-auto">
-        {newBooks.map((book) => (
-          <BookCard key={book.id} data={book} navigate={`/books/${book.id}`} />
-        ))}
+      <div className="relative">
+        <ScrollArea>
+          <div className="flex space-x-4 pb-4">
+            {newBooks.map((book) => (
+              <BookCard
+                key={book.id}
+                data={book}
+                navigate={`/books/${book.id}`}
+              />
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </div>
       <div className="min-h-[40vh] w-full bg-neutral-500 my-9">
         <p>Featured book</p>
@@ -69,10 +79,19 @@ const Home = () => {
           Show all
         </Link>
       </div>
-      <div className="flex gap-6 overflow-x-auto">
-        {popularBooks.map((book) => (
-          <BookCard key={book.id} data={book} navigate={`/books/${book.id}`} />
-        ))}
+      <div className="relative">
+        <ScrollArea>
+          <div className="flex space-x-4 pb-4">
+            {popularBooks.map((book) => (
+              <BookCard
+                key={book.id}
+                data={book}
+                navigate={`/books/${book.id}`}
+              />
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </div>
     </Layout>
   );

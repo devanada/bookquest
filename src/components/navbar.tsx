@@ -27,7 +27,10 @@ const Navbar = () => {
   }
 
   return (
-    <header className="w-full sticky top-0 bg-white/90" aria-label="navbar">
+    <header
+      className="w-full sticky top-0 bg-white/90 z-50"
+      aria-label="navbar"
+    >
       <nav className="mx-auto flex container items-center justify-between p-6 lg:px-8 [&>*]:text-sm [&>*]:font-semibold [&>*]:leading-6 [&>*]:text-gray-900">
         <Link to="/">BookQuest</Link>
         <div className="flex gap-4 items-center justify-end">
@@ -54,9 +57,7 @@ const Navbar = () => {
                       My Books
                     </DropdownMenuItem>
                   ) : (
-                    <DropdownMenuItem
-                      onClick={() => navigate("/history-borrow")}
-                    >
+                    <DropdownMenuItem onClick={() => navigate("/dashboard")}>
                       Dashboard
                     </DropdownMenuItem>
                   )}

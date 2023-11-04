@@ -1,60 +1,64 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Navigate,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Home from "@/pages";
-import NotFound from "@/pages/404";
-import Login from "@/pages/auth/login";
-import Register from "@/pages/auth/register";
-import Profile from "@/pages/users/profile";
-import EditProfile from "@/pages/users/edit-profile";
-import Books from "@/pages/books";
-import DetailBook from "@/pages/books/detail";
-import History from "@/pages/borrow/history";
+import HomePage from "@/pages";
+import NotFoundPage from "@/pages/404";
+import LoginPage from "@/pages/auth/login";
+import RegisterPage from "@/pages/auth/register";
+import ProfilePage from "@/pages/users/profile";
+import EditProfilePage from "@/pages/users/edit-profile";
+import BooksPage from "@/pages/books";
+import DetailBookPage from "@/pages/books/detail";
+import HistoryPage from "@/pages/borrow/history";
+import AdminPage from "@/pages/admin";
 
-import { useToken } from "@/utils/contexts/token";
+import ProtectedRoute from "./protected-route";
 
 const App = () => {
-  const { token } = useToken();
-
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/login",
-      element: token ? <Navigate to="/" /> : <Login />,
-    },
-    {
-      path: "/register",
-      element: token ? <Navigate to="/" /> : <Register />,
-    },
-    {
-      path: "/profile",
-      element: !token ? <Navigate to="/login" /> : <Profile />,
-    },
-    {
-      path: "/edit-profile",
-      element: !token ? <Navigate to="/login" /> : <EditProfile />,
-    },
-    {
-      path: "/books",
-      element: <Books />,
-    },
-    {
-      path: "/books/:id_book",
-      element: <DetailBook />,
-    },
-    {
-      path: "/history-borrow",
-      element: !token ? <Navigate to="/login" /> : <History />,
-    },
-    {
-      path: "*",
-      element: <NotFound />,
+      element: <ProtectedRoute />,
+      children: [
+        {
+          path: "/",
+          element: <HomePage />,
+        },
+        {
+          path: "/login",
+          element: <LoginPage />,
+        },
+        {
+          path: "/register",
+          element: <RegisterPage />,
+        },
+        {
+          path: "/profile",
+          element: <ProfilePage />,
+        },
+        {
+          path: "/edit-profile",
+          element: <EditProfilePage />,
+        },
+        {
+          path: "/books",
+          element: <BooksPage />,
+        },
+        {
+          path: "/books/:id_book",
+          element: <DetailBookPage />,
+        },
+        {
+          path: "/history-borrow",
+          element: <HistoryPage />,
+        },
+        {
+          path: "/dashboard",
+          element: <AdminPage />,
+        },
+        {
+          path: "*",
+          element: <NotFoundPage />,
+        },
+      ],
     },
   ]);
 

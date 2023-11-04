@@ -6,17 +6,21 @@ import Footer from "@/components/footer";
 
 interface Props {
   children: ReactNode;
-  center?: boolean;
+  centerY?: boolean;
+  centerX?: boolean;
 }
 
-const Layout = ({ children, center = false }: Readonly<Props>) => {
+const Layout = (props: Readonly<Props>) => {
+  const { children, centerY = false, centerX = false } = props;
+
   return (
     <div className="w-full h-screen bg-white text-neutral-800 overflow-auto font-roboto flex flex-col">
       <Navbar />
       <div
         className={clsx(
           "container mx-auto grow py-4 px-8 flex flex-col",
-          center && "items-center justify-center"
+          centerY && "justify-center",
+          centerX && "items-center"
         )}
       >
         {children}

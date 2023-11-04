@@ -1,14 +1,13 @@
 import { useSearchParams } from "react-router-dom";
-
 import { useEffect, useState } from "react";
 
 import { useToast } from "@/components/ui/use-toast";
+import Pagination from "@/components/pagination";
 import BookCard from "@/components/book-card";
 import Layout from "@/components/layout";
 
 import { Book, getBooks } from "@/utils/apis/books";
 import { Meta } from "@/utils/types/api";
-import Pagination from "@/components/pagination";
 
 const AllBook = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -48,7 +47,7 @@ const AllBook = () => {
 
   return (
     <Layout>
-      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {books.map((book) => (
           <BookCard key={book.id} data={book} navigate={`/books/${book.id}`} />
         ))}
@@ -57,7 +56,7 @@ const AllBook = () => {
         meta={meta}
         onClickPrevious={() => handlePrevNextPage(meta?.currentPage! - 1)}
         onClickNext={() => handlePrevNextPage(meta?.currentPage! + 1)}
-        onClickPage={() => {}}
+        onClickPage={(page) => handlePrevNextPage(page)}
       />
     </Layout>
   );
