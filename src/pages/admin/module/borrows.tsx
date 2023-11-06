@@ -200,6 +200,7 @@ const AdminBorrows = () => {
           <Input
             placeholder="Search"
             type="search"
+            value={searchValue}
             onChange={(e) => onInputChange(e.currentTarget.value)}
           />
         </div>

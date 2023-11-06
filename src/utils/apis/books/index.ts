@@ -5,16 +5,7 @@ import {
   updateBook,
   deleteBook,
 } from "./api";
-import { sampleBooks } from "./sample-data";
 import { bookSchema, Book, BookSchema } from "./types";
 
-export {
-  getBooks,
-  getDetailBook,
-  addBook,
-  updateBook,
-  deleteBook,
-  bookSchema,
-  sampleBooks,
-};
+export { getBooks, getDetailBook, addBook, updateBook, deleteBook, bookSchema };
 export type { Book, BookSchema };

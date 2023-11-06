@@ -202,6 +202,7 @@ const AdminBooks = () => {
           <Input
             placeholder="Search"
             type="search"
+            value={searchValue}
             onChange={(e) => onInputChange(e.currentTarget.value)}
           />
           <AddEditBook onSubmit={(data) => onSubmit(data)}>

@@ -5,7 +5,6 @@ import {
   updateBorrow,
   deleteBorrow,
 } from "./api";
-import { sampleBooks } from "./sample-data";
 import {
   borrowSchema,
   borrowPayload,
@@ -20,7 +19,6 @@ export {
   postBorrow,
   updateBorrow,
   deleteBorrow,
-  sampleBooks,
   borrowSchema,
   borrowPayload,
 };
