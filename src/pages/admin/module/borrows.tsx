@@ -3,30 +3,29 @@ import { useSearchParams } from "react-router-dom";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit2, Trash2 } from "lucide-react";
 import { debounce } from "lodash";
+import { format, parseISO } from "date-fns";
 
 import { useToast } from "@/components/ui/use-toast";
 import Pagination from "@/components/pagination";
 import DataTable from "@/components/data-table";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Alert from "@/components/alert";
-import AddEditBook from "./add-edit-book";
+import AddEditBorrow from "./edit-borrow";
 
-import {
-  Book,
-  BookSchema,
-  addBook,
-  deleteBook,
-  getBooks,
-  updateBook,
-} from "@/utils/apis/books";
 import { Meta } from "@/utils/types/api";
+import {
+  getBorrows,
+  updateBorrow,
+  deleteBorrow,
+  Borrow,
+  BorrowPayload,
+} from "@/utils/apis/borrows";
 
-const AdminBooks = () => {
+const AdminBorrows = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
 
-  const [books, setBooks] = useState<Book[]>([]);
+  const [borrows, setBorrows] = useState<Borrow[]>([]);
   const [searchValue, setSearchValue] = useState(
     searchParams.get("query") ?? ""
   );
@@ -58,9 +57,9 @@ const AdminBooks = () => {
       }
 
       try {
-        const result = await getBooks({ ...query });
+        const result = await getBorrows({ ...query });
         const { datas, ...rest } = result.payload;
-        setBooks(datas);
+        setBorrows(datas);
         setMeta(rest);
       } catch (error: any) {
         toast({
@@ -73,7 +72,7 @@ const AdminBooks = () => {
     [searchParams]
   );
 
-  const columns = useMemo<ColumnDef<Book>[]>(
+  const columns = useMemo<ColumnDef<Borrow>[]>(
     () => [
       {
         header: "No",
@@ -83,47 +82,48 @@ const AdminBooks = () => {
         size: 50,
       },
       {
-        header: "Title",
-        accessorKey: "title",
+        header: "User",
+        accessorKey: "user.full_name",
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+      },
+      {
+        header: "Book",
+        accessorKey: "book.title",
         cell: (info) => info.getValue(),
         footer: (props) => props.column.id,
         size: 200,
       },
       {
-        header: "Author",
-        accessorKey: "author",
-        cell: (info) => info.getValue(),
+        header: "Borrow Date",
+        accessorKey: "borrow_date",
+        cell: (info) =>
+          format(parseISO(info.getValue() as string), "iii, dd MMM yyyy"),
         footer: (props) => props.column.id,
       },
       {
-        header: "Category",
-        accessorKey: "category",
-        cell: (info) => info.getValue(),
+        header: "Due Date",
+        accessorKey: "due_date",
+        cell: (info) =>
+          format(parseISO(info.getValue() as string), "iii, dd MMM yyyy"),
         footer: (props) => props.column.id,
       },
       {
-        header: "ISBN",
-        accessorKey: "isbn",
+        header: "Return Date",
+        accessorKey: "return_date",
         cell: (info) => info.getValue(),
         footer: (props) => props.column.id,
-      },
-      {
-        header: "Featured",
-        accessorKey: "featured",
-        cell: (info) => String(info.getValue()),
-        footer: (props) => props.column.id,
-        size: 80,
       },
       {
         header: "",
         accessorKey: "actionEdit",
         cell: (info) => (
-          <AddEditBook
+          <AddEditBorrow
             editData={info.row.original}
             onSubmit={(data) => onSubmit(data, info.row.original.id)}
           >
             <Edit2 />
-          </AddEditBook>
+          </AddEditBorrow>
         ),
         footer: (props) => props.column.id,
         size: 50,
@@ -134,7 +134,7 @@ const AdminBooks = () => {
         cell: (info) => (
           <Alert
             title="Are you sure?"
-            description={`This action cannot be undone. This will permanently delete "${info.row.original.title}".`}
+            description={`This action cannot be undone. This will permanently delete the borrow data.`}
             onAction={() => onDelete(info.row.original.id)}
           >
             <Trash2 />
@@ -152,11 +152,9 @@ const AdminBooks = () => {
     [getSuggestions]
   );
 
-  async function onSubmit(data: BookSchema, id_book?: number) {
+  async function onSubmit(data: BorrowPayload, id_borrow: number) {
     try {
-      const result = id_book
-        ? await updateBook(data, id_book)
-        : await addBook(data);
+      const result = await updateBorrow(data, id_borrow);
       toast({
         description: result.message,
       });
@@ -169,9 +167,9 @@ const AdminBooks = () => {
     }
   }
 
-  async function onDelete(id_book: number) {
+  async function onDelete(id_borrow: number) {
     try {
-      const result = await deleteBook(String(id_book));
+      const result = await deleteBorrow(String(id_borrow));
       toast({
         description: result.message,
       });
@@ -204,12 +202,9 @@ const AdminBooks = () => {
             type="search"
             onChange={(e) => onInputChange(e.currentTarget.value)}
           />
-          <AddEditBook onSubmit={(data) => onSubmit(data)}>
-            <Button>Add</Button>
-          </AddEditBook>
         </div>
       </div>
-      <DataTable columns={columns} datas={books} />
+      <DataTable columns={columns} datas={borrows} />
       <Pagination
         meta={meta}
         onClickPrevious={() => handlePagination(meta?.currentPage! - 1)}
@@ -220,4 +215,4 @@ const AdminBooks = () => {
   );
 };
 
-export default AdminBooks;
+export default AdminBorrows;

@@ -8,7 +8,7 @@ export const setAxiosConfig = (token: string) => {
 };
 
 axiosWithConfig.interceptors.request.use((axiosConfig) => {
-  axiosConfig.baseURL = "http://192.168.110.146:4001/api/v1";
+  axiosConfig.baseURL = import.meta.env.VITE_BASE_URL;
   axiosConfig.headers.Authorization = `Bearer ${bearerToken}`;
 
   return axiosConfig;

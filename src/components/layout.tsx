@@ -14,7 +14,7 @@ const Layout = (props: Readonly<Props>) => {
   const { children, centerY = false, centerX = false } = props;
 
   return (
-    <div className="w-full h-screen bg-white text-neutral-800 overflow-auto font-roboto flex flex-col">
+    <div className="w-full h-screen bg-white dark:bg-black text-gray-900 dark:text-white overflow-auto font-roboto flex flex-col">
       <Navbar />
       <div
         className={clsx(

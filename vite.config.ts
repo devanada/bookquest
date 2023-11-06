@@ -12,4 +12,7 @@ export default defineConfig({
       "@": "/src",
     },
   },
+  optimizeDeps: {
+    exclude: ["date-fns"],
+  },
 });

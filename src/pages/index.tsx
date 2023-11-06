@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import BookCard from "@/components/book-card";
 import Layout from "@/components/layout";
 import { toast } from "@/components/ui/use-toast";
 
 import { Book, getBooks } from "@/utils/apis/books";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const Home = () => {
   const [popularBooks, setPopularBooks] = useState<Book[]>([]);

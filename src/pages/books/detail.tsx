@@ -1,5 +1,5 @@
+import { useState, useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
 
 import { Separator } from "@/components/ui/separator";
 import { badgeVariants } from "@/components/ui/badge";
@@ -8,12 +8,23 @@ import Layout from "@/components/layout";
 import { useToast } from "@/components/ui/use-toast";
 
 import { Book, getDetailBook } from "@/utils/apis/books";
+import useCartStore from "@/utils/state";
 
 const DetailBook = () => {
+  const carts = useCartStore((state) => state.cart);
+  const addBook = useCartStore((state) => state.addBook);
   const params = useParams();
   const { toast } = useToast();
 
-  const [book, setBook] = useState<Partial<Book>>({});
+  const [book, setBook] = useState<Book>();
+
+  const isInCart = useMemo(() => {
+    const checkCart = carts.find((cart) => cart.id === +params.id_book!);
+
+    if (checkCart) return true;
+
+    return false;
+  }, [carts]);
 
   useEffect(() => {
     fetchData();
@@ -30,6 +41,13 @@ const DetailBook = () => {
         variant: "destructive",
       });
     }
+  }
+
+  function onClickBorrow() {
+    toast({
+      description: "Book has been added to cart.",
+    });
+    addBook(book!);
   }
 
   return (
@@ -53,7 +71,13 @@ const DetailBook = () => {
             <p>{book?.description}</p>
           </div>
           <div className="flex gap-4 justify-center">
-            <Button size="lg">Borrow</Button>
+            <Button
+              size="lg"
+              onClick={() => onClickBorrow()}
+              disabled={isInCart}
+            >
+              {isInCart ? "In Cart" : "Borrow"}
+            </Button>
           </div>
         </div>
       </div>

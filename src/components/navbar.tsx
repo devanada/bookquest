@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { ShoppingBasket } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -6,16 +7,23 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Combobox from "@/components/combobox";
+import Cart from "@/components/cart";
 import { useToast } from "@/components/ui/use-toast";
 
 import { useToken } from "@/utils/contexts/token";
+import { useTheme } from "@/utils/contexts/theme";
 
 const Navbar = () => {
   const { token, user, changeToken } = useToken();
+  const { setTheme } = useTheme();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -28,13 +36,18 @@ const Navbar = () => {
 
   return (
     <header
-      className="w-full sticky top-0 bg-white/90 z-50"
+      className="w-full sticky top-0 bg-white/90 dark:bg-black/90 z-50"
       aria-label="navbar"
     >
-      <nav className="mx-auto flex container items-center justify-between p-6 lg:px-8 [&>*]:text-sm [&>*]:font-semibold [&>*]:leading-6 [&>*]:text-gray-900">
+      <nav className="mx-auto flex container items-center justify-between p-6 lg:px-8 [&>*]:text-sm [&>*]:font-semibold [&>*]:leading-6 [&>*]:text-gray-900 [&>*]:dark:text-white">
         <Link to="/">BookQuest</Link>
         <div className="flex gap-4 items-center justify-end">
           <Combobox placeholder="Search books..." />
+          {token && user.role === "user" && (
+            <Cart>
+              <ShoppingBasket />
+            </Cart>
+          )}
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar>
@@ -43,7 +56,7 @@ const Navbar = () => {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              {token ? (
+              {token && (
                 <>
                   <DropdownMenuLabel>Hi! {user.full_name}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
@@ -61,10 +74,29 @@ const Navbar = () => {
                       Dashboard
                     </DropdownMenuItem>
                   )}
-                  <DropdownMenuItem onClick={() => handleLogout()}>
-                    Logout
-                  </DropdownMenuItem>
                 </>
+              )}
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Theme</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem onClick={() => setTheme("light")}>
+                      Light
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setTheme("dark")}>
+                      Dark
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setTheme("system")}>
+                      System
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+              <DropdownMenuSeparator />
+              {token ? (
+                <DropdownMenuItem onClick={() => handleLogout()}>
+                  Logout
+                </DropdownMenuItem>
               ) : (
                 <>
                   <DropdownMenuItem onClick={() => navigate("/login")}>
