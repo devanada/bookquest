@@ -12,7 +12,6 @@ import { Input } from "@/components/ui/input";
 import Alert from "@/components/alert";
 import AddEditBorrow from "./edit-borrow";
 
-import { Meta } from "@/utils/types/api";
 import {
   getBorrows,
   updateBorrow,
@@ -20,20 +19,19 @@ import {
   Borrow,
   BorrowPayload,
 } from "@/utils/apis/borrows";
+import { Meta } from "@/utils/types/api";
 
 const AdminBorrows = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
 
   const [borrows, setBorrows] = useState<Borrow[]>([]);
-  const [searchValue, setSearchValue] = useState(
-    searchParams.get("query") ?? ""
-  );
+  const [searchValue, setSearchValue] = useState("");
   const [meta, setMeta] = useState<Meta>();
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [searchParams]);
 
   const getSuggestions = useCallback(
     async function (query: string) {
@@ -41,33 +39,9 @@ const AdminBorrows = () => {
         searchParams.delete("query");
       } else {
         searchParams.set("query", query);
+        searchParams.delete("page");
       }
       setSearchParams(searchParams);
-
-      fetchData();
-    },
-    [searchParams]
-  );
-
-  const fetchData = useCallback(
-    async function () {
-      let query: { [key: string]: string } = {};
-      for (const entry of searchParams.entries()) {
-        if (entry[0] !== "tab") query[entry[0]] = entry[1];
-      }
-
-      try {
-        const result = await getBorrows({ ...query });
-        const { datas, ...rest } = result.payload;
-        setBorrows(datas);
-        setMeta(rest);
-      } catch (error: any) {
-        toast({
-          title: "Oops! Something went wrong.",
-          description: error.toString(),
-          variant: "destructive",
-        });
-      }
     },
     [searchParams]
   );
@@ -151,6 +125,31 @@ const AdminBorrows = () => {
     () => debounce(getSuggestions, 1000),
     [getSuggestions]
   );
+
+  async function fetchData() {
+    if (searchParams.get("tab") !== "books") {
+      if (searchParams.has("query")) {
+        setSearchValue(searchParams.get("query")!);
+      }
+
+      const query = Object.fromEntries(
+        [...searchParams].filter((param) => param[0] !== "tab")
+      );
+
+      try {
+        const result = await getBorrows({ ...query });
+        const { datas, ...rest } = result.payload;
+        setBorrows(datas);
+        setMeta(rest);
+      } catch (error: any) {
+        toast({
+          title: "Oops! Something went wrong.",
+          description: error.toString(),
+          variant: "destructive",
+        });
+      }
+    }
+  }
 
   async function onSubmit(data: BorrowPayload, id_borrow: number) {
     try {

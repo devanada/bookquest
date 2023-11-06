@@ -51,11 +51,11 @@ const Navbar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar>
-                <AvatarImage src={user.profile_picture} />
-                <AvatarFallback>N</AvatarFallback>
+                <AvatarImage src={user.profile_picture} alt={user.full_name} />
+                <AvatarFallback>BQ</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent className="w-44" align="end" forceMount>
               {token && (
                 <>
                   <DropdownMenuLabel>Hi! {user.full_name}</DropdownMenuLabel>

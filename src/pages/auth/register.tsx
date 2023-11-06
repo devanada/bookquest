@@ -118,7 +118,7 @@ const Register = () => {
                   <Input placeholder="Phone Number" type="tel" {...field} />
                 )}
               </CustomFormField>
-              <CardFooter className="flex justify-center">
+              <CardFooter className="grid gap-6">
                 <Button
                   type="submit"
                   disabled={form.formState.isSubmitting}
@@ -130,8 +130,25 @@ const Register = () => {
                       Please wait
                     </>
                   ) : (
-                    "Submit"
+                    "Register"
                   )}
+                </Button>
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">
+                      Or
+                    </span>
+                  </div>
+                </div>
+                <Button
+                  variant="secondary"
+                  type="submit"
+                  onClick={() => navigate("/login")}
+                >
+                  Login
                 </Button>
               </CardFooter>
             </form>

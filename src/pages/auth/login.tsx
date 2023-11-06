@@ -79,7 +79,7 @@ const Login = () => {
                   <Input {...field} placeholder="Password" type="password" />
                 )}
               </CustomFormField>
-              <CardFooter className="flex justify-center">
+              <CardFooter className="grid gap-6">
                 <Button
                   type="submit"
                   disabled={form.formState.isSubmitting}
@@ -91,8 +91,25 @@ const Login = () => {
                       Please wait
                     </>
                   ) : (
-                    "Submit"
+                    "Login"
                   )}
+                </Button>
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">
+                      Or
+                    </span>
+                  </div>
+                </div>
+                <Button
+                  variant="secondary"
+                  type="submit"
+                  onClick={() => navigate("/register")}
+                >
+                  Register
                 </Button>
               </CardFooter>
             </form>

@@ -27,14 +27,12 @@ const AdminBooks = () => {
   const { toast } = useToast();
 
   const [books, setBooks] = useState<Book[]>([]);
-  const [searchValue, setSearchValue] = useState(
-    searchParams.get("query") ?? ""
-  );
+  const [searchValue, setSearchValue] = useState("");
   const [meta, setMeta] = useState<Meta>();
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [searchParams]);
 
   const getSuggestions = useCallback(
     async function (query: string) {
@@ -42,33 +40,9 @@ const AdminBooks = () => {
         searchParams.delete("query");
       } else {
         searchParams.set("query", query);
+        searchParams.delete("page");
       }
       setSearchParams(searchParams);
-
-      fetchData();
-    },
-    [searchParams]
-  );
-
-  const fetchData = useCallback(
-    async function () {
-      let query: { [key: string]: string } = {};
-      for (const entry of searchParams.entries()) {
-        if (entry[0] !== "tab") query[entry[0]] = entry[1];
-      }
-
-      try {
-        const result = await getBooks({ ...query });
-        const { datas, ...rest } = result.payload;
-        setBooks(datas);
-        setMeta(rest);
-      } catch (error: any) {
-        toast({
-          title: "Oops! Something went wrong.",
-          description: error.toString(),
-          variant: "destructive",
-        });
-      }
     },
     [searchParams]
   );
@@ -151,6 +125,31 @@ const AdminBooks = () => {
     () => debounce(getSuggestions, 1000),
     [getSuggestions]
   );
+
+  async function fetchData() {
+    if (searchParams.get("tab") !== "borrows") {
+      if (searchParams.has("query")) {
+        setSearchValue(searchParams.get("query")!);
+      }
+
+      const query = Object.fromEntries(
+        [...searchParams].filter((param) => param[0] !== "tab")
+      );
+
+      try {
+        const result = await getBooks({ ...query });
+        const { datas, ...rest } = result.payload;
+        setBooks(datas);
+        setMeta(rest);
+      } catch (error: any) {
+        toast({
+          title: "Oops! Something went wrong.",
+          description: error.toString(),
+          variant: "destructive",
+        });
+      }
+    }
+  }
 
   async function onSubmit(data: BookSchema, id_book?: number) {
     try {

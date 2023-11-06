@@ -11,7 +11,7 @@ const BookCard = (props: BookCardProps) => {
   const { data, navigate } = props;
   return (
     <Link
-      className="flex flex-col p-4 w-[250px] h-fit items-center gap-3"
+      className="flex flex-col p-4 w-48 md:w-56 lg:w-64 h-fit items-center gap-3"
       to={navigate}
     >
       <figure className="overflow-hidden shadow-md shadow-neutral-300">
@@ -26,7 +26,7 @@ const BookCard = (props: BookCardProps) => {
       <p className="font-bold text-lg tracking-wide text-center">
         {data.title}
       </p>
-      <p className="text-neutral-400 text-sm text-center">{data.author}</p>
+      <p className="text-muted-foreground text-sm text-center">{data.author}</p>
     </Link>
   );
 };
