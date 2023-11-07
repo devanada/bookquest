@@ -53,7 +53,7 @@ const Login = () => {
 
   return (
     <Layout centerX centerY>
-      <Card className="w-1/2">
+      <Card className="w-full md:w-3/4 lg:w-1/2">
         <CardHeader>
           <CardTitle>Login</CardTitle>
           <CardDescription>Login to your account using email</CardDescription>

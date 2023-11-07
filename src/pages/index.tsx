@@ -107,22 +107,25 @@ const Home = () => {
       <div className="relative min-h-[40vh] w-full my-9 overflow-auto">
         <div className="flex w-full h-full snap-x relative snap-mandatory overflow-x-auto">
           {featuredBooks.map((book) => (
-            <div
+            <Link
               key={book.id}
-              className={`min-w-full min-h-full flex items-center p-3 snap-start bg-[linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.5)),url(${book.cover_image})] dark:bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(${book.cover_image})] bg-center bg-cover md:bg-gradient-to-r md:dark:bg-gradient-to-r md:from-neutral-100 md:dark:from-neutral-800 md:from-5% md:via-white md:dark:via-black md:to-neutral-100 md:dark:to-neutral-800 md:to-95% `}
+              className={`min-w-full min-h-full flex items-center md:p-3 snap-start md:bg-gradient-to-r md:dark:bg-gradient-to-r md:from-neutral-50 md:dark:from-neutral-800 md:from-5% md:via-white md:dark:via-black md:to-neutral-50 md:dark:to-neutral-800 md:to-95% bg-[url(${book.cover_image})] bg-no-repeat bg-cover bg-center`}
+              to={`/books/${book.id}`}
             >
               <img
                 className="object-contain aspect-[3/4] hidden md:block"
                 src={book.cover_image}
                 alt={book.title}
               />
-              <div>
-                <p className="font-bold text-lg tracking-wide">{book.title}</p>
-                <p className="text-muted-foreground text-sm">
+              <div className="w-full h-full flex flex-col justify-center gap-1 p-3 md:p-0 bg-white/50 dark:bg-black/50 md:bg-transparent md:dark:bg-transparent">
+                <p className="font-bold text-lg tracking-wide text-center md:text-left">
+                  {book.title}
+                </p>
+                <p className="text-muted-foreground text-sm text-center md:text-left">
                   by {book.author}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
