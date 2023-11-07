@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
-import { useEffect } from "react";
 
 import { CustomFormField } from "@/components/custom-formfield";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,8 @@ const EditProfile = () => {
   const { user, changeToken } = useToken();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<ProfileUpdateType>({
     resolver: zodResolver(profileUpdateSchema),
@@ -60,6 +62,7 @@ const EditProfile = () => {
   }
 
   async function onDelete() {
+    setIsLoading(true);
     try {
       const result = await deleteProfile();
       toast({
@@ -73,6 +76,8 @@ const EditProfile = () => {
         description: error.message.toString(),
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -85,11 +90,22 @@ const EditProfile = () => {
             name="full_name"
             label="Full Name"
           >
-            {(field) => <Input placeholder="John Doe" {...field} />}
+            {(field) => (
+              <Input
+                placeholder="John Doe"
+                disabled={form.formState.isSubmitting || isLoading}
+                {...field}
+              />
+            )}
           </CustomFormField>
           <CustomFormField control={form.control} name="email" label="Email">
             {(field) => (
-              <Input placeholder="name@mail.com" type="email" {...field} />
+              <Input
+                placeholder="name@mail.com"
+                type="email"
+                disabled={form.formState.isSubmitting || isLoading}
+                {...field}
+              />
             )}
           </CustomFormField>
           <CustomFormField
@@ -98,7 +114,12 @@ const EditProfile = () => {
             label="Password"
           >
             {(field) => (
-              <Input placeholder="Password" type="password" {...field} />
+              <Input
+                placeholder="Password"
+                type="password"
+                disabled={form.formState.isSubmitting || isLoading}
+                {...field}
+              />
             )}
           </CustomFormField>
           <CustomFormField
@@ -106,7 +127,13 @@ const EditProfile = () => {
             name="address"
             label="Address"
           >
-            {(field) => <Input placeholder="Address" {...field} />}
+            {(field) => (
+              <Input
+                placeholder="Address"
+                disabled={form.formState.isSubmitting || isLoading}
+                {...field}
+              />
+            )}
           </CustomFormField>
           <CustomFormField
             control={form.control}
@@ -114,7 +141,12 @@ const EditProfile = () => {
             label="Phone Number"
           >
             {(field) => (
-              <Input placeholder="Phone Number" type="tel" {...field} />
+              <Input
+                placeholder="Phone Number"
+                type="tel"
+                disabled={form.formState.isSubmitting || isLoading}
+                {...field}
+              />
             )}
           </CustomFormField>
           <CustomFormField
@@ -122,15 +154,21 @@ const EditProfile = () => {
             name="profile_picture"
             label="Profile Picture"
           >
-            {(field) => <Input type="file" {...field} />}
+            {(field) => (
+              <Input
+                type="file"
+                disabled={form.formState.isSubmitting || isLoading}
+                {...field}
+              />
+            )}
           </CustomFormField>
           <div className="flex gap-3">
             <Button
               type="submit"
-              disabled={form.formState.isSubmitting}
-              aria-disabled={form.formState.isSubmitting}
+              disabled={form.formState.isSubmitting || isLoading}
+              aria-disabled={form.formState.isSubmitting || isLoading}
             >
-              {form.formState.isSubmitting ? (
+              {form.formState.isSubmitting || isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Please wait
@@ -144,9 +182,20 @@ const EditProfile = () => {
               description="This action cannot be undone. This will permanently delete your account."
               onAction={() => onDelete()}
             >
-              {/* TODO: Add loading spinner */}
-              <Button type="button" variant="destructive">
-                Delete Account
+              <Button
+                type="button"
+                variant="destructive"
+                disabled={form.formState.isSubmitting || isLoading}
+                aria-disabled={form.formState.isSubmitting || isLoading}
+              >
+                {form.formState.isSubmitting || isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Please wait
+                  </>
+                ) : (
+                  "Delete Account"
+                )}
               </Button>
             </Alert>
           </div>

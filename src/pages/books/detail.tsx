@@ -8,15 +8,15 @@ import Layout from "@/components/layout";
 import { useToast } from "@/components/ui/use-toast";
 
 import { Book, getDetailBook } from "@/utils/apis/books";
-import useCartStore from "@/utils/state";
 import { useToken } from "@/utils/contexts/token";
+import useCartStore from "@/utils/state";
 
 const DetailBook = () => {
-  const { user } = useToken();
-  const carts = useCartStore((state) => state.cart);
   const addBook = useCartStore((state) => state.addBook);
-  const params = useParams();
+  const carts = useCartStore((state) => state.cart);
   const { toast } = useToast();
+  const { user } = useToken();
+  const params = useParams();
 
   const [book, setBook] = useState<Book>();
 
@@ -34,8 +34,8 @@ const DetailBook = () => {
 
   async function fetchData() {
     try {
-      const result = await getDetailBook(params.id_book!);
-      setBook(result.payload);
+      const { payload } = await getDetailBook(params.id_book!);
+      setBook(payload);
     } catch (error: any) {
       toast({
         title: "Oops! Something went wrong.",

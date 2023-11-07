@@ -12,6 +12,7 @@ import { useToken } from "@/utils/contexts/token";
 
 const Profile = () => {
   const { user } = useToken();
+
   const [recentlyBorrow, setRecentlyBorrow] = useState<Borrow[]>([]);
 
   useEffect(() => {

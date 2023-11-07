@@ -130,8 +130,8 @@ const Home = () => {
         </div>
       </div>
       <div className="flex justify-between my-9 w-full h-fit items-center">
-        <p className="font-semibold text-lg tracking-wider">Popular</p>
-        <Link className="text-sm tracking-wide" to="/books?sort=Popular">
+        <p className="font-semibold text-lg tracking-wider">Others</p>
+        <Link className="text-sm tracking-wide" to="/books">
           Show all
         </Link>
       </div>
