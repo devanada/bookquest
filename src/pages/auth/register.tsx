@@ -69,7 +69,14 @@ const Register = () => {
                 name="full_name"
                 label="Full Name"
               >
-                {(field) => <Input placeholder="John Doe" {...field} />}
+                {(field) => (
+                  <Input
+                    placeholder="John Doe"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
+                )}
               </CustomFormField>
               <CustomFormField
                 control={form.control}
@@ -77,7 +84,13 @@ const Register = () => {
                 label="Email"
               >
                 {(field) => (
-                  <Input placeholder="name@mail.com" type="email" {...field} />
+                  <Input
+                    placeholder="name@mail.com"
+                    type="email"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
                 )}
               </CustomFormField>
               <CustomFormField
@@ -86,7 +99,13 @@ const Register = () => {
                 label="Password"
               >
                 {(field) => (
-                  <Input placeholder="Password" type="password" {...field} />
+                  <Input
+                    placeholder="Password"
+                    type="password"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
                 )}
               </CustomFormField>
               <CustomFormField
@@ -98,6 +117,8 @@ const Register = () => {
                   <Input
                     placeholder="Retype Password"
                     type="password"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
                     {...field}
                   />
                 )}
@@ -107,7 +128,14 @@ const Register = () => {
                 name="address"
                 label="Address"
               >
-                {(field) => <Input placeholder="Address" {...field} />}
+                {(field) => (
+                  <Input
+                    placeholder="Address"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
+                )}
               </CustomFormField>
               <CustomFormField
                 control={form.control}
@@ -115,7 +143,13 @@ const Register = () => {
                 label="Phone Number"
               >
                 {(field) => (
-                  <Input placeholder="Phone Number" type="tel" {...field} />
+                  <Input
+                    placeholder="Phone Number"
+                    type="tel"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
                 )}
               </CustomFormField>
               <CardFooter className="grid gap-6">

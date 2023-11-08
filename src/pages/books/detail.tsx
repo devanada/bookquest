@@ -54,9 +54,9 @@ const DetailBook = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col md:flex-row w-full h-full py-6 px-3 gap-5">
+      <div className="flex flex-col md:flex-row w-full h-full py-6 px-3 gap-5 items-center">
         <img
-          className="object-contain aspect-[3/4]"
+          className="object-contain aspect-[3/4] w-52 md:w-64 lg:w-96"
           src={book?.cover_image}
           alt={book?.title}
         />

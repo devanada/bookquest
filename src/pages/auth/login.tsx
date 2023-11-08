@@ -67,7 +67,13 @@ const Login = () => {
                 label="Email"
               >
                 {(field) => (
-                  <Input {...field} placeholder="name@mail.com" type="email" />
+                  <Input
+                    placeholder="name@mail.com"
+                    type="email"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
                 )}
               </CustomFormField>
               <CustomFormField
@@ -76,7 +82,13 @@ const Login = () => {
                 label="Password"
               >
                 {(field) => (
-                  <Input {...field} placeholder="Password" type="password" />
+                  <Input
+                    placeholder="Password"
+                    type="password"
+                    disabled={form.formState.isSubmitting}
+                    aria-disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
                 )}
               </CustomFormField>
               <CardFooter className="grid gap-6">

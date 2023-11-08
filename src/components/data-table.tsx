@@ -21,7 +21,7 @@ interface Props<T> {
   datas: T[];
 }
 
-function DataTable<T>(props: Props<T>) {
+function DataTable<T>(props: Readonly<Props<T>>) {
   const { columns = [], datas = [] } = props;
 
   const table = useReactTable({

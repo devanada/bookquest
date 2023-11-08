@@ -113,7 +113,7 @@ const Home = () => {
               to={`/books/${book.id}`}
             >
               <img
-                className="object-contain aspect-[3/4] hidden md:block"
+                className="object-contain aspect-[3/4] hidden md:block w-48 md:w-56 lg:w-64"
                 src={book.cover_image}
                 alt={book.title}
               />

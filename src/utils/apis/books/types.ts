@@ -15,12 +15,9 @@ export const bookSchema = z.object({
   description: z.string().min(1, { message: "Description is required" }),
   cover_image: z
     .any()
+    .refine((files) => files?.size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
     .refine(
-      (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-      `Max image size is 5MB.`
-    )
-    .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.type),
       "Only .jpg, .jpeg, and .png formats are supported."
     )
     .optional()

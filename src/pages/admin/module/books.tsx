@@ -26,8 +26,8 @@ const AdminBooks = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
 
-  const [books, setBooks] = useState<Book[]>([]);
   const [searchValue, setSearchValue] = useState("");
+  const [books, setBooks] = useState<Book[]>([]);
   const [meta, setMeta] = useState<Meta>();
 
   useEffect(() => {

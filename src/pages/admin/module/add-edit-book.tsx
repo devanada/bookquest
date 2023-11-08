@@ -78,7 +78,14 @@ const AddEditBook = (props: Props) => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <CustomFormField control={form.control} name="title" label="Title">
-              {(field) => <Input placeholder="Title book" {...field} />}
+              {(field) => (
+                <Input
+                  placeholder="Title book"
+                  disabled={form.formState.isSubmitting}
+                  aria-disabled={form.formState.isSubmitting}
+                  {...field}
+                />
+              )}
             </CustomFormField>
             <CustomFormField
               control={form.control}
@@ -89,11 +96,17 @@ const AddEditBook = (props: Props) => {
                 <Input
                   type="file"
                   accept="image/*"
+                  disabled={form.formState.isSubmitting}
+                  aria-disabled={form.formState.isSubmitting}
                   {...field}
                   value={value}
                   onChange={(e) => {
                     setValue(e.target.value);
-                    field.onChange(e.target.files);
+                    if (e.target.files !== null) {
+                      field.onChange(e.target.files[0]);
+                    } else {
+                      field.onChange("");
+                    }
                   }}
                 />
               )}
@@ -103,10 +116,24 @@ const AddEditBook = (props: Props) => {
               name="author"
               label="Author"
             >
-              {(field) => <Input placeholder="Author" {...field} />}
+              {(field) => (
+                <Input
+                  placeholder="Author"
+                  disabled={form.formState.isSubmitting}
+                  aria-disabled={form.formState.isSubmitting}
+                  {...field}
+                />
+              )}
             </CustomFormField>
             <CustomFormField control={form.control} name="isbn" label="ISBN">
-              {(field) => <Input placeholder="ISBN" {...field} />}
+              {(field) => (
+                <Input
+                  placeholder="ISBN"
+                  disabled={form.formState.isSubmitting}
+                  aria-disabled={form.formState.isSubmitting}
+                  {...field}
+                />
+              )}
             </CustomFormField>
             <CustomFormSelect
               control={form.control}
@@ -120,7 +147,14 @@ const AddEditBook = (props: Props) => {
               name="description"
               label="Description"
             >
-              {(field) => <Textarea placeholder="Description" {...field} />}
+              {(field) => (
+                <Textarea
+                  placeholder="Description"
+                  disabled={form.formState.isSubmitting}
+                  aria-disabled={form.formState.isSubmitting}
+                  {...field}
+                />
+              )}
             </CustomFormField>
             <DialogFooter>
               <Button

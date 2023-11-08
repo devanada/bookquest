@@ -94,6 +94,7 @@ const EditProfile = () => {
               <Input
                 placeholder="John Doe"
                 disabled={form.formState.isSubmitting || isLoading}
+                aria-disabled={form.formState.isSubmitting || isLoading}
                 {...field}
               />
             )}
@@ -104,6 +105,7 @@ const EditProfile = () => {
                 placeholder="name@mail.com"
                 type="email"
                 disabled={form.formState.isSubmitting || isLoading}
+                aria-disabled={form.formState.isSubmitting || isLoading}
                 {...field}
               />
             )}
@@ -118,6 +120,7 @@ const EditProfile = () => {
                 placeholder="Password"
                 type="password"
                 disabled={form.formState.isSubmitting || isLoading}
+                aria-disabled={form.formState.isSubmitting || isLoading}
                 {...field}
               />
             )}
@@ -131,6 +134,7 @@ const EditProfile = () => {
               <Input
                 placeholder="Address"
                 disabled={form.formState.isSubmitting || isLoading}
+                aria-disabled={form.formState.isSubmitting || isLoading}
                 {...field}
               />
             )}
@@ -145,6 +149,7 @@ const EditProfile = () => {
                 placeholder="Phone Number"
                 type="tel"
                 disabled={form.formState.isSubmitting || isLoading}
+                aria-disabled={form.formState.isSubmitting || isLoading}
                 {...field}
               />
             )}
@@ -158,6 +163,7 @@ const EditProfile = () => {
               <Input
                 type="file"
                 disabled={form.formState.isSubmitting || isLoading}
+                aria-disabled={form.formState.isSubmitting || isLoading}
                 {...field}
               />
             )}

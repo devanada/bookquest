@@ -49,7 +49,7 @@ interface ChildrenProps<T extends FieldValues> extends Props<T> {
 }
 
 export function CustomFormField<T extends FieldValues>(
-  props: ChildrenProps<T>
+  props: Readonly<ChildrenProps<T>>
 ) {
   const { name, label, description, control, children } = props;
 
@@ -69,7 +69,9 @@ export function CustomFormField<T extends FieldValues>(
   );
 }
 
-export function CustomFormSelect<T extends FieldValues>(props: Props<T>) {
+export function CustomFormSelect<T extends FieldValues>(
+  props: Readonly<Props<T>>
+) {
   const { name, label, placeholder, description, control, options } = props;
 
   return (
@@ -104,7 +106,9 @@ export function CustomFormSelect<T extends FieldValues>(props: Props<T>) {
   );
 }
 
-export function CustomFormDatePicker<T extends FieldValues>(props: Props<T>) {
+export function CustomFormDatePicker<T extends FieldValues>(
+  props: Readonly<Props<T>>
+) {
   const { name, label, placeholder, description, control } = props;
 
   return (
