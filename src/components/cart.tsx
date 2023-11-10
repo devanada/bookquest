@@ -76,7 +76,13 @@ const Cart = (props: Props) => {
           <Separator />
         </div>
         <SheetFooter>
-          <Button onClick={() => onBorrow()}>Borrow</Button>
+          <Button
+            onClick={() => onBorrow()}
+            disabled={carts.length === 0}
+            aria-disabled={carts.length === 0}
+          >
+            Borrow
+          </Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>

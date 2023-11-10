@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { BookCard, BookCardLoading } from "@/components/book-card";
 import { Button } from "@/components/ui/button";
-import BookCard from "@/components/book-card";
 import Layout from "@/components/layout";
 import { toast } from "@/components/ui/use-toast";
 
@@ -14,12 +14,14 @@ const Profile = () => {
   const { user } = useToken();
 
   const [recentlyBorrow, setRecentlyBorrow] = useState<Borrow[]>([]);
+  const [isLoadingBorrows, setIsLoadingBorrows] = useState(true);
 
   useEffect(() => {
     user.role === "user" && fetchData();
-  }, []);
+  }, [user]);
 
   async function fetchData() {
+    setIsLoadingBorrows(true);
     try {
       const result = await getBorrows({ limit: 5 });
       setRecentlyBorrow(result.payload.datas);
@@ -29,6 +31,8 @@ const Profile = () => {
         description: error.toString(),
         variant: "destructive",
       });
+    } finally {
+      setIsLoadingBorrows(false);
     }
   }
 
@@ -60,13 +64,17 @@ const Profile = () => {
           <div className="relative">
             <ScrollArea>
               <div className="flex space-x-4 pb-4">
-                {recentlyBorrow.map((borrow) => (
-                  <BookCard
-                    key={borrow.id}
-                    data={borrow.book}
-                    navigate={`/books/${borrow.book.id}`}
-                  />
-                ))}
+                {isLoadingBorrows
+                  ? [...Array(5).keys()].map((key) => (
+                      <BookCardLoading key={key} />
+                    ))
+                  : recentlyBorrow.map((borrow) => (
+                      <BookCard
+                        key={borrow.id}
+                        data={borrow.book}
+                        navigate={`/books/${borrow.book.id}`}
+                      />
+                    ))}
               </div>
               <ScrollBar orientation="horizontal" />
             </ScrollArea>

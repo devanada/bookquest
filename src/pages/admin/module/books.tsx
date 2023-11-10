@@ -89,8 +89,7 @@ const AdminBooks = () => {
         size: 80,
       },
       {
-        header: "",
-        accessorKey: "actionEdit",
+        id: "actionEdit",
         cell: (info) => (
           <AddEditBook
             editData={info.row.original}
@@ -103,8 +102,7 @@ const AdminBooks = () => {
         size: 50,
       },
       {
-        header: "",
-        accessorKey: "actionDelete",
+        id: "actionDelete",
         cell: (info) => (
           <Alert
             title="Are you sure?"

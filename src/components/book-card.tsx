@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 
+import { Skeleton } from "@/components/ui/skeleton";
+
 import { Book } from "@/utils/apis/books/types";
 
-export interface BookCardProps {
+interface BookCardProps {
   data: Book;
   navigate: string;
 }
 
-const BookCard = (props: BookCardProps) => {
+export const BookCard = (props: BookCardProps) => {
   const { data, navigate } = props;
   return (
     <Link
@@ -31,4 +33,12 @@ const BookCard = (props: BookCardProps) => {
   );
 };
 
-export default BookCard;
+export const BookCardLoading = () => {
+  return (
+    <div className="flex flex-col p-4 w-48 md:w-56 lg:w-64 h-fit items-center gap-3">
+      <Skeleton className="w-full h-[17rem]" />
+      <Skeleton className="h-4 w-full" />
+      <Skeleton className="h-4 w-full" />
+    </div>
+  );
+};

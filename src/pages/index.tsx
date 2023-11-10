@@ -2,26 +2,31 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { BookCard, BookCardLoading } from "@/components/book-card";
 import { buttonVariants } from "@/components/ui/button";
-import BookCard from "@/components/book-card";
+import { BookSlider, BookSliderLoading } from "@/components/book-slider";
+import RiveWrapper from "@/components/rive";
 import Layout from "@/components/layout";
 import { toast } from "@/components/ui/use-toast";
 
 import { Book, getBooks } from "@/utils/apis/books";
-import RiveWrapper from "@/components/rive";
 
 const Home = () => {
   const [featuredBooks, setFeaturedBooks] = useState<Book[]>([]);
   const [popularBooks, setPopularBooks] = useState<Book[]>([]);
   const [newBooks, setNewBooks] = useState<Book[]>([]);
+  const [isLoadingNew, setIsLoadingNew] = useState(true);
+  const [isLoadingFeatured, setIsLoadingFeatured] = useState(true);
+  const [isLoadingOther, setIsLoadingOther] = useState(true);
 
   useEffect(() => {
-    fetchPopularBooks();
     fetchNewBooks();
     fetchFeaturedBooks();
+    fetchOtherBooks();
   }, []);
 
   async function fetchNewBooks() {
+    setIsLoadingNew(true);
     try {
       const result = await getBooks({ sort: "new", limit: 5 });
       setNewBooks(result.payload.datas);
@@ -31,10 +36,13 @@ const Home = () => {
         description: error.toString(),
         variant: "destructive",
       });
+    } finally {
+      setIsLoadingNew(false);
     }
   }
 
   async function fetchFeaturedBooks() {
+    setIsLoadingFeatured(true);
     try {
       const result = await getBooks({ filter: "featured", limit: 5 });
       setFeaturedBooks(result.payload.datas);
@@ -44,10 +52,13 @@ const Home = () => {
         description: error.toString(),
         variant: "destructive",
       });
+    } finally {
+      setIsLoadingFeatured(false);
     }
   }
 
-  async function fetchPopularBooks() {
+  async function fetchOtherBooks() {
+    setIsLoadingOther(true);
     try {
       const result = await getBooks({ limit: 5 });
       setPopularBooks(result.payload.datas);
@@ -57,6 +68,8 @@ const Home = () => {
         description: error.toString(),
         variant: "destructive",
       });
+    } finally {
+      setIsLoadingOther(false);
     }
   }
 
@@ -93,40 +106,28 @@ const Home = () => {
       <div className="relative w-full h-fit">
         <ScrollArea>
           <div className="flex space-x-4 pb-4">
-            {newBooks.map((book) => (
-              <BookCard
-                key={book.id}
-                data={book}
-                navigate={`/books/${book.id}`}
-              />
-            ))}
+            {isLoadingNew
+              ? [...Array(5).keys()].map((key) => <BookCardLoading key={key} />)
+              : newBooks.map((book) => (
+                  <BookCard
+                    key={book.id}
+                    data={book}
+                    navigate={`/books/${book.id}`}
+                  />
+                ))}
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
       </div>
       <div className="relative min-h-[40vh] w-full my-9 overflow-auto">
         <div className="flex w-full h-full snap-x relative snap-mandatory overflow-x-auto">
-          {featuredBooks.map((book) => (
-            <Link
-              key={book.id}
-              className={`min-w-full min-h-full flex items-center md:p-3 snap-start md:bg-gradient-to-r md:dark:bg-gradient-to-r md:from-neutral-50 md:dark:from-neutral-800 md:from-5% md:via-white md:dark:via-black md:to-neutral-50 md:dark:to-neutral-800 md:to-95% bg-[url(${book.cover_image})] bg-no-repeat bg-cover bg-center`}
-              to={`/books/${book.id}`}
-            >
-              <img
-                className="object-contain aspect-[3/4] hidden md:block w-48 md:w-56 lg:w-64"
-                src={book.cover_image}
-                alt={book.title}
-              />
-              <div className="w-full h-full flex flex-col justify-center gap-1 p-3 md:p-0 bg-white/50 dark:bg-black/50 md:bg-transparent md:dark:bg-transparent">
-                <p className="font-bold text-lg tracking-wide text-center md:text-left">
-                  {book.title}
-                </p>
-                <p className="text-muted-foreground text-sm text-center md:text-left">
-                  by {book.author}
-                </p>
-              </div>
-            </Link>
-          ))}
+          {isLoadingFeatured ? (
+            <BookSliderLoading />
+          ) : (
+            featuredBooks.map((book) => (
+              <BookSlider key={book.id} book={book} />
+            ))
+          )}
         </div>
       </div>
       <div className="flex justify-between my-9 w-full h-fit items-center">
@@ -138,13 +139,15 @@ const Home = () => {
       <div className="relative w-full h-fit">
         <ScrollArea>
           <div className="flex space-x-4 pb-4">
-            {popularBooks.map((book) => (
-              <BookCard
-                key={book.id}
-                data={book}
-                navigate={`/books/${book.id}`}
-              />
-            ))}
+            {isLoadingOther
+              ? [...Array(5).keys()].map((key) => <BookCardLoading key={key} />)
+              : popularBooks.map((book) => (
+                  <BookCard
+                    key={book.id}
+                    data={book}
+                    navigate={`/books/${book.id}`}
+                  />
+                ))}
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
