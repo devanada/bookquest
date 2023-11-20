@@ -60,7 +60,11 @@ const Login = () => {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form
+              aria-label="form-login"
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-8"
+            >
               <CustomFormField
                 control={form.control}
                 name="email"
@@ -70,6 +74,7 @@ const Login = () => {
                   <Input
                     placeholder="name@mail.com"
                     type="email"
+                    aria-label="input-email"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                     {...field}
@@ -85,6 +90,7 @@ const Login = () => {
                   <Input
                     placeholder="Password"
                     type="password"
+                    aria-label="input-password"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                     {...field}
@@ -94,6 +100,7 @@ const Login = () => {
               <CardFooter className="grid gap-6">
                 <Button
                   type="submit"
+                  aria-label="btn-submit"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
                 >
@@ -119,6 +126,7 @@ const Login = () => {
                 <Button
                   variant="secondary"
                   type="submit"
+                  aria-label="btn-navigate-register"
                   onClick={() => navigate("/register")}
                 >
                   Register

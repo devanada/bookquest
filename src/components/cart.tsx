@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { Trash2 } from "lucide-react";
 
 import {
@@ -29,6 +29,20 @@ const Cart = (props: Props) => {
   const { toast } = useToast();
 
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const handleTabClose = (event: BeforeUnloadEvent) => {
+      if (carts.length > 0) {
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener("beforeunload", handleTabClose);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleTabClose);
+    };
+  }, [carts]);
 
   async function onBorrow() {
     try {

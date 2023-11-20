@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
@@ -14,5 +15,13 @@ export default defineConfig({
   },
   optimizeDeps: {
     exclude: ["date-fns"],
+  },
+  test: {
+    globals: true,
+    environment: "jsdom",
+    coverage: {
+      provider: "v8",
+      exclude: ["src/utils/apis/axiosWithConfig.ts"],
+    },
   },
 });
