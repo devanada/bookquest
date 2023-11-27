@@ -22,6 +22,7 @@ const Layout = (props: Readonly<Props>) => {
           centerY && "justify-center",
           centerX && "items-center"
         )}
+        data-testid="content-container"
       >
         {children}
       </div>

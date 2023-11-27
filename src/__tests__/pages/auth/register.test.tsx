@@ -27,21 +27,21 @@ describe("Login Page", () => {
 
   describe("Renders the page", () => {
     it("should render the page", () => {
-      const form = screen.getByLabelText("form-register");
+      const form = screen.getByTestId("form-register");
       expect(form).toBeTruthy();
 
       for (const input in formInput) {
-        expect(within(form).getByLabelText(input)).toBeTruthy();
+        expect(within(form).getByTestId(input)).toBeTruthy();
       }
-      expect(within(form).getByLabelText("btn-submit")).toBeTruthy();
+      expect(within(form).getByTestId("btn-submit")).toBeTruthy();
     });
 
     it("should displays value inside input", () => {
-      const form = screen.getByLabelText("form-register");
+      const form = screen.getByTestId("form-register");
 
       let input: keyof typeof formInput;
       for (input in formInput) {
-        const component = within(form).getByLabelText(input);
+        const component = within(form).getByTestId(input);
         fireEvent.change(component, {
           target: { value: formInput[input] },
         });
@@ -53,10 +53,10 @@ describe("Login Page", () => {
   describe("Action for Register", () => {
     it("should show error message when some of input is missing a value", async () => {
       await act(async () => {
-        fireEvent.click(screen.getByLabelText("btn-submit"));
+        fireEvent.click(screen.getByTestId("btn-submit"));
       });
 
-      const form = screen.getByLabelText("form-register");
+      const form = screen.getByTestId("form-register");
 
       expect(within(form).getByText("Full name is required")).toBeTruthy();
       expect(within(form).getByText("Email is required")).toBeTruthy();
@@ -73,30 +73,30 @@ describe("Login Page", () => {
     });
 
     it("should show error message when password is not match", async () => {
-      const form = screen.getByLabelText("form-register");
+      const form = screen.getByTestId("form-register");
       const dupeFormInput = { ...formInput, "input-repassword": "abc5dasa" };
 
       let input: keyof typeof dupeFormInput;
       for (input in dupeFormInput) {
-        const component = within(form).getByLabelText(input);
+        const component = within(form).getByTestId(input);
         fireEvent.change(component, {
           target: { value: dupeFormInput[input] },
         });
       }
 
       await act(async () => {
-        fireEvent.click(screen.getByLabelText("btn-submit"));
+        fireEvent.click(screen.getByTestId("btn-submit"));
       });
 
       expect(within(form).getByText("Passwords don't match")).toBeTruthy();
     });
 
     it("should display failed toast when email is already exist", async () => {
-      const form = screen.getByLabelText("form-register");
+      const form = screen.getByTestId("form-register");
 
       let input: keyof typeof formInput;
       for (input in formInput) {
-        const component = within(form).getByLabelText(input);
+        const component = within(form).getByTestId(input);
         fireEvent.change(component, {
           target: { value: formInput[input] },
         });
@@ -109,7 +109,7 @@ describe("Login Page", () => {
       });
 
       await act(async () => {
-        fireEvent.click(screen.getByLabelText("btn-submit"));
+        fireEvent.click(screen.getByTestId("btn-submit"));
       });
 
       setTimeout(() => {
@@ -120,12 +120,12 @@ describe("Login Page", () => {
     });
 
     it("should display successful toast when using unique email", async () => {
-      const form = screen.getByLabelText("form-register");
+      const form = screen.getByTestId("form-register");
       let dupeFormInput = { ...formInput, "input-email": "test3@mail.com" };
 
       let input: keyof typeof dupeFormInput;
       for (input in dupeFormInput) {
-        const component = within(form).getByLabelText(input);
+        const component = within(form).getByTestId(input);
         fireEvent.change(component, {
           target: { value: dupeFormInput[input] },
         });
@@ -138,7 +138,7 @@ describe("Login Page", () => {
       });
 
       await act(async () => {
-        fireEvent.click(screen.getByLabelText("btn-submit"));
+        fireEvent.click(screen.getByTestId("btn-submit"));
       });
 
       setTimeout(() => {

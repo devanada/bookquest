@@ -19,18 +19,18 @@ describe("Login Page", () => {
 
   describe("Renders the page", () => {
     it("should render the page", () => {
-      const form = screen.getByLabelText("form-login");
+      const form = screen.getByTestId("form-login");
       expect(form).toBeTruthy();
 
-      expect(within(form).getByLabelText("input-email")).toBeTruthy();
-      expect(within(form).getByLabelText("input-password")).toBeTruthy();
-      expect(within(form).getByLabelText("btn-submit")).toBeTruthy();
+      expect(within(form).getByTestId("input-email")).toBeTruthy();
+      expect(within(form).getByTestId("input-password")).toBeTruthy();
+      expect(within(form).getByTestId("btn-submit")).toBeTruthy();
     });
 
     it("should displays value inside input", () => {
-      const form = screen.getByLabelText("form-login");
-      const email = within(form).getByLabelText("input-email");
-      const password = within(form).getByLabelText("input-password");
+      const form = screen.getByTestId("form-login");
+      const email = within(form).getByTestId("input-email");
+      const password = within(form).getByTestId("input-password");
 
       fireEvent.change(email, {
         target: { value: "test@mail.com" },
@@ -47,18 +47,18 @@ describe("Login Page", () => {
   describe("Action for Login", () => {
     it("should show error message when some of input is missing a value", async () => {
       await act(async () => {
-        fireEvent.click(screen.getByLabelText("btn-submit"));
+        fireEvent.click(screen.getByTestId("btn-submit"));
       });
-      const form = screen.getByLabelText("form-login");
+      const form = screen.getByTestId("form-login");
 
       expect(within(form).getByText("Email is required")).toBeTruthy();
       expect(within(form).getByText("Password is required")).toBeTruthy();
     });
 
     it("should display failed toast when using incorrect credential (password)", async () => {
-      const form = screen.getByLabelText("form-login");
-      const email = within(form).getByLabelText("input-email");
-      const password = within(form).getByLabelText("input-password");
+      const form = screen.getByTestId("form-login");
+      const email = within(form).getByTestId("input-email");
+      const password = within(form).getByTestId("input-password");
 
       fireEvent.change(email, {
         target: { value: "test@mail.com" },
@@ -74,7 +74,7 @@ describe("Login Page", () => {
       });
 
       await act(async () => {
-        fireEvent.click(screen.getByLabelText("btn-submit"));
+        fireEvent.click(screen.getByTestId("btn-submit"));
       });
 
       setTimeout(() => {
@@ -83,9 +83,9 @@ describe("Login Page", () => {
     });
 
     it("should display failed toast when using incorrect credential (email)", async () => {
-      const form = screen.getByLabelText("form-login");
-      const email = within(form).getByLabelText("input-email");
-      const password = within(form).getByLabelText("input-password");
+      const form = screen.getByTestId("form-login");
+      const email = within(form).getByTestId("input-email");
+      const password = within(form).getByTestId("input-password");
 
       fireEvent.change(email, {
         target: { value: "tester@mail.com" },
@@ -101,7 +101,7 @@ describe("Login Page", () => {
       });
 
       await act(async () => {
-        fireEvent.click(screen.getByLabelText("btn-submit"));
+        fireEvent.click(screen.getByTestId("btn-submit"));
       });
 
       setTimeout(() => {
@@ -112,9 +112,9 @@ describe("Login Page", () => {
     });
 
     it("should display successful toast when using correct credential", async () => {
-      const form = screen.getByLabelText("form-login");
-      const email = within(form).getByLabelText("input-email");
-      const password = within(form).getByLabelText("input-password");
+      const form = screen.getByTestId("form-login");
+      const email = within(form).getByTestId("input-email");
+      const password = within(form).getByTestId("input-password");
 
       fireEvent.change(email, {
         target: { value: "test@mail.com" },
@@ -123,7 +123,7 @@ describe("Login Page", () => {
         target: { value: "abc5dasar" },
       });
 
-      mockedAxios.post.mockRejectedValueOnce({
+      mockedAxios.post.mockResolvedValueOnce({
         data: {
           message: "Login successfully",
           payload: { token: "random-string" },
@@ -131,7 +131,7 @@ describe("Login Page", () => {
       });
 
       await act(async () => {
-        fireEvent.click(screen.getByLabelText("btn-submit"));
+        fireEvent.click(screen.getByTestId("btn-submit"));
       });
 
       setTimeout(() => {

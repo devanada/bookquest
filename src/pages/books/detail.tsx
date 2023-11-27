@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 
+import NotFound from "@/pages/404";
 import { Separator } from "@/components/ui/separator";
 import { badgeVariants } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ const DetailBook = () => {
   const params = useParams();
 
   const [book, setBook] = useState<Book>();
+  const [isError, setIsError] = useState(false);
 
   const isInCart = useMemo(() => {
     const checkCart = carts.find((cart) => cart.id === +params.id_book!);
@@ -30,13 +32,14 @@ const DetailBook = () => {
 
   useEffect(() => {
     fetchData();
-  }, [params]);
+  }, []);
 
   async function fetchData() {
     try {
       const { payload } = await getDetailBook(params.id_book!);
       setBook(payload);
     } catch (error: any) {
+      setIsError(true);
       toast({
         title: "Oops! Something went wrong.",
         description: error.toString(),
@@ -52,6 +55,9 @@ const DetailBook = () => {
     addBook(book!);
   }
 
+  if (isError) {
+    return <NotFound />;
+  }
   return (
     <Layout>
       <div className="flex flex-col md:flex-row w-full h-full py-6 px-3 gap-5 items-center">
@@ -66,7 +72,11 @@ const DetailBook = () => {
             <p className="font-light text-sm text-muted-foreground">
               by {book?.author}
             </p>
-            <Link className={`${badgeVariants()} w-fit`} to={"/"}>
+            <Link
+              className={`${badgeVariants()} w-fit`}
+              to={"/"}
+              data-testid={book?.category}
+            >
               {book?.category}
             </Link>
           </div>
@@ -74,12 +84,14 @@ const DetailBook = () => {
           <div className="flex-grow">
             <p>{book?.description}</p>
           </div>
+          <>{console.log(user)}</>
           {user.role === "user" && (
             <div className="flex gap-4 justify-center">
               <Button
                 size="lg"
                 onClick={() => onClickBorrow()}
                 disabled={isInCart}
+                data-testid="btn-borrow"
               >
                 {isInCart ? "In Cart" : "Borrow"}
               </Button>

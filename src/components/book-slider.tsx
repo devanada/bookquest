@@ -6,6 +6,7 @@ import { Book } from "@/utils/apis/books";
 
 interface Props {
   book: Book;
+  "data-testid"?: string;
 }
 
 export const BookSlider = (props: Props) => {
@@ -14,6 +15,7 @@ export const BookSlider = (props: Props) => {
     <Link
       className={`min-w-full min-h-full flex items-center md:p-3 snap-start md:bg-gradient-to-r md:dark:bg-gradient-to-r md:from-neutral-50 md:dark:from-neutral-800 md:from-5% md:via-white md:dark:via-black md:to-neutral-50 md:dark:to-neutral-800 md:to-95% bg-[url(${book.cover_image})] bg-no-repeat bg-cover bg-center gap-3`}
       to={`/books/${book.id}`}
+      data-testid={props["data-testid"]}
     >
       <img
         className="object-contain aspect-[3/4] hidden md:block w-48 md:w-56 lg:w-64"

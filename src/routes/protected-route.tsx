@@ -5,6 +5,7 @@ import { useToken } from "@/utils/contexts/token";
 const ProtectedRoute = () => {
   const { pathname } = useLocation();
   const { token, user } = useToken();
+
   const authProtected = ["/login", "/register"];
   const protectedByToken = [
     "/profile",
@@ -12,7 +13,8 @@ const ProtectedRoute = () => {
     "/history-borrow",
     "/dashboard",
   ];
-  const protectedByRole = ["/dashboard"];
+  const adminProtected = ["/dashboard"];
+  const userProtected = ["/history-borrow"];
 
   if (authProtected.includes(pathname)) {
     if (token) return <Navigate to="/" />;
@@ -21,8 +23,12 @@ const ProtectedRoute = () => {
   if (protectedByToken.includes(pathname)) {
     if (!token) return <Navigate to="/login" />;
 
-    if (protectedByRole.includes(pathname)) {
+    if (adminProtected.includes(pathname)) {
       if (user.role === "user") return <Navigate to="/" />;
+    }
+
+    if (userProtected.includes(pathname)) {
+      if (user.role === "admin") return <Navigate to="/" />;
     }
   }
 

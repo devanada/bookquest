@@ -64,7 +64,10 @@ const AllBook = () => {
   return (
     <Layout>
       <div className="flex justify-end">
-        <Select onValueChange={(value) => handleChangeSort(value)}>
+        <Select
+          onValueChange={(value) => handleChangeSort(value)}
+          data-testid="sort-by"
+        >
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
@@ -74,7 +77,10 @@ const AllBook = () => {
           </SelectContent>
         </Select>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 justify-items-center">
+      <div
+        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 justify-items-center"
+        data-testid="books-container"
+      >
         {isLoadingBooks
           ? [...Array(10).keys()].map((key) => <BookCardLoading key={key} />)
           : books.map((book) => (
@@ -82,6 +88,7 @@ const AllBook = () => {
                 key={book.id}
                 data={book}
                 navigate={`/books/${book.id}`}
+                data-testid="detail-book"
               />
             ))}
       </div>

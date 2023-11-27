@@ -86,7 +86,11 @@ const Home = () => {
             </p>
           </div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row">
-            <Link className={buttonVariants()} to="/books">
+            <Link
+              className={buttonVariants()}
+              to="/books"
+              data-testid="to-books"
+            >
               Get Started
             </Link>
           </div>
@@ -99,13 +103,17 @@ const Home = () => {
         <p className="font-semibold text-lg tracking-wider">
           New Release Books
         </p>
-        <Link className="text-sm tracking-wide" to="/books?sort=new">
+        <Link
+          className="text-sm tracking-wide"
+          to="/books?sort=new"
+          data-testid="to-books-by-new"
+        >
           Show all
         </Link>
       </div>
       <div className="relative w-full h-fit">
         <ScrollArea>
-          <div className="flex space-x-4 pb-4">
+          <div className="flex space-x-4 pb-4" data-testid="new-books">
             {isLoadingNew
               ? [...Array(5).keys()].map((key) => <BookCardLoading key={key} />)
               : newBooks.map((book) => (
@@ -113,6 +121,7 @@ const Home = () => {
                     key={book.id}
                     data={book}
                     navigate={`/books/${book.id}`}
+                    data-testid={`detail-new-book`}
                   />
                 ))}
           </div>
@@ -120,12 +129,19 @@ const Home = () => {
         </ScrollArea>
       </div>
       <div className="relative min-h-[40vh] w-full my-9 overflow-auto">
-        <div className="flex w-full h-full snap-x relative snap-mandatory overflow-x-auto">
+        <div
+          className="flex w-full h-full snap-x relative snap-mandatory overflow-x-auto"
+          data-testid="featured-books"
+        >
           {isLoadingFeatured ? (
             <BookSliderLoading />
           ) : (
             featuredBooks.map((book) => (
-              <BookSlider key={book.id} book={book} />
+              <BookSlider
+                key={book.id}
+                book={book}
+                data-testid={`detail-featured-book`}
+              />
             ))
           )}
         </div>
@@ -138,7 +154,7 @@ const Home = () => {
       </div>
       <div className="relative w-full h-fit">
         <ScrollArea>
-          <div className="flex space-x-4 pb-4">
+          <div className="flex space-x-4 pb-4" data-testid="other-books">
             {isLoadingOther
               ? [...Array(5).keys()].map((key) => <BookCardLoading key={key} />)
               : popularBooks.map((book) => (
@@ -146,6 +162,7 @@ const Home = () => {
                     key={book.id}
                     data={book}
                     navigate={`/books/${book.id}`}
+                    data-testid={`detail-other-book`}
                   />
                 ))}
           </div>

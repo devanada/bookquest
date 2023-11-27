@@ -61,7 +61,7 @@ const Login = () => {
         <CardContent>
           <Form {...form}>
             <form
-              aria-label="form-login"
+              data-testid="form-login"
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-8"
             >
@@ -72,9 +72,9 @@ const Login = () => {
               >
                 {(field) => (
                   <Input
+                    data-testid="input-email"
                     placeholder="name@mail.com"
                     type="email"
-                    aria-label="input-email"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                     {...field}
@@ -88,9 +88,9 @@ const Login = () => {
               >
                 {(field) => (
                   <Input
+                    data-testid="input-password"
                     placeholder="Password"
                     type="password"
-                    aria-label="input-password"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                     {...field}
@@ -99,8 +99,8 @@ const Login = () => {
               </CustomFormField>
               <CardFooter className="grid gap-6">
                 <Button
+                  data-testid="btn-submit"
                   type="submit"
-                  aria-label="btn-submit"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
                 >
@@ -124,9 +124,9 @@ const Login = () => {
                   </div>
                 </div>
                 <Button
+                  data-testid="btn-navigate-register"
                   variant="secondary"
                   type="submit"
-                  aria-label="btn-navigate-register"
                   onClick={() => navigate("/register")}
                 >
                   Register

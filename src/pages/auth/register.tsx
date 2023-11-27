@@ -64,7 +64,7 @@ const Register = () => {
         <CardContent>
           <Form {...form}>
             <form
-              aria-label="form-register"
+              data-testid="form-register"
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-8"
             >
@@ -76,7 +76,7 @@ const Register = () => {
                 {(field) => (
                   <Input
                     placeholder="John Doe"
-                    aria-label="input-full-name"
+                    data-testid="input-full-name"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                     {...field}
@@ -92,7 +92,7 @@ const Register = () => {
                   <Input
                     placeholder="name@mail.com"
                     type="email"
-                    aria-label="input-email"
+                    data-testid="input-email"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                     {...field}
@@ -108,7 +108,7 @@ const Register = () => {
                   <Input
                     placeholder="Password"
                     type="password"
-                    aria-label="input-password"
+                    data-testid="input-password"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                     {...field}
@@ -124,7 +124,7 @@ const Register = () => {
                   <Input
                     placeholder="Retype Password"
                     type="password"
-                    aria-label="input-repassword"
+                    data-testid="input-repassword"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                     {...field}
@@ -139,7 +139,7 @@ const Register = () => {
                 {(field) => (
                   <Input
                     placeholder="Address"
-                    aria-label="input-address"
+                    data-testid="input-address"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                     {...field}
@@ -155,7 +155,7 @@ const Register = () => {
                   <Input
                     placeholder="Phone Number"
                     type="tel"
-                    aria-label="input-phone-number"
+                    data-testid="input-phone-number"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                     {...field}
@@ -165,7 +165,7 @@ const Register = () => {
               <CardFooter className="grid gap-6">
                 <Button
                   type="submit"
-                  aria-label="btn-submit"
+                  data-testid="btn-submit"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
                 >
@@ -191,7 +191,7 @@ const Register = () => {
                 <Button
                   variant="secondary"
                   type="submit"
-                  aria-label="btn-navigate-login"
+                  data-testid="btn-navigate-login"
                   onClick={() => navigate("/login")}
                 >
                   Login

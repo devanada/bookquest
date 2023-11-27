@@ -3,11 +3,14 @@ import { BrowserRouter } from "react-router-dom";
 import { render } from "@testing-library/react";
 
 import { ThemeProvider } from "@/utils/contexts/theme";
+import { TokenProvider } from "@/utils/contexts/token";
 
 const Providers = ({ children }: any) => {
   return (
     <BrowserRouter>
-      <ThemeProvider>{children}</ThemeProvider>
+      <TokenProvider>
+        <ThemeProvider>{children}</ThemeProvider>
+      </TokenProvider>
     </BrowserRouter>
   );
 };

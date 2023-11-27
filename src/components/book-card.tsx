@@ -7,6 +7,7 @@ import { Book } from "@/utils/apis/books/types";
 interface BookCardProps {
   data: Book;
   navigate: string;
+  "data-testid"?: string;
 }
 
 export const BookCard = (props: BookCardProps) => {
@@ -15,6 +16,7 @@ export const BookCard = (props: BookCardProps) => {
     <Link
       className="flex flex-col p-4 w-48 md:w-56 lg:w-64 h-fit items-center gap-3"
       to={navigate}
+      data-testid={props["data-testid"]}
     >
       <figure className="overflow-hidden shadow-md shadow-neutral-300">
         <img
