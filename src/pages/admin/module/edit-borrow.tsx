@@ -51,7 +51,7 @@ const AddEditBorrow = (props: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen} key={editData?.id}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="w-full md:w-1/2 lg:w-2/3">
         <DialogHeader>
           <DialogTitle>Edit Borrow</DialogTitle>
         </DialogHeader>

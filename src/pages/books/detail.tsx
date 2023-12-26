@@ -38,11 +38,11 @@ const DetailBook = () => {
     try {
       const { payload } = await getDetailBook(params.id_book!);
       setBook(payload);
-    } catch (error: any) {
+    } catch (error) {
       setIsError(true);
       toast({
         title: "Oops! Something went wrong.",
-        description: error.toString(),
+        description: (error as Error).message,
         variant: "destructive",
       });
     }

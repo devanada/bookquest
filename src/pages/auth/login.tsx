@@ -42,10 +42,10 @@ const Login = () => {
         description: "Hello, welcome back!",
       });
       navigate("/");
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Oops! Something went wrong.",
-        description: error.message.toString(),
+        description: (error as Error).message,
         variant: "destructive",
       });
     }

@@ -33,13 +33,12 @@ const AddEditBook = (props: Props) => {
   const { children, editData, onSubmit } = props;
 
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
 
   const form = useForm<BookSchema>({
     resolver: zodResolver(bookSchema),
     defaultValues: {
       title: "",
-      cover_image: "",
+      cover_image: new File([], ""),
       author: "",
       isbn: "",
       category: "",
@@ -59,19 +58,22 @@ const AddEditBook = (props: Props) => {
   }, [form.formState]);
 
   function setEditData() {
+    let modeType: "add" | "edit" = "add";
     if (editData) {
+      modeType = "edit";
       form.setValue("title", editData.title);
       form.setValue("author", editData.author);
       form.setValue("isbn", editData.isbn);
       form.setValue("category", editData.category);
       form.setValue("description", editData.description);
     }
+    form.setValue("mode", modeType);
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen} key={editData?.id}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="w-full md:w-1/2 lg:w-2/3">
         <DialogHeader>
           <DialogTitle>{editData ? "Edit a Book" : "Add a Book"}</DialogTitle>
         </DialogHeader>
@@ -80,10 +82,11 @@ const AddEditBook = (props: Props) => {
             <CustomFormField control={form.control} name="title" label="Title">
               {(field) => (
                 <Input
+                  {...field}
                   placeholder="Title book"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
-                  {...field}
+                  value={field.value as string}
                 />
               )}
             </CustomFormField>
@@ -95,19 +98,13 @@ const AddEditBook = (props: Props) => {
               {(field) => (
                 <Input
                   type="file"
-                  accept="image/*"
+                  accept="image/png, image/jpeg, image/jpg"
+                  multiple={false}
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
-                  {...field}
-                  value={value}
-                  onChange={(e) => {
-                    setValue(e.target.value);
-                    if (e.target.files !== null) {
-                      field.onChange(e.target.files[0]);
-                    } else {
-                      field.onChange("");
-                    }
-                  }}
+                  onChange={(e) =>
+                    field.onChange(e.target.files ? e.target.files[0] : null)
+                  }
                 />
               )}
             </CustomFormField>
@@ -118,20 +115,22 @@ const AddEditBook = (props: Props) => {
             >
               {(field) => (
                 <Input
+                  {...field}
                   placeholder="Author"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
-                  {...field}
+                  value={field.value as string}
                 />
               )}
             </CustomFormField>
             <CustomFormField control={form.control} name="isbn" label="ISBN">
               {(field) => (
                 <Input
+                  {...field}
                   placeholder="ISBN"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
-                  {...field}
+                  value={field.value as string}
                 />
               )}
             </CustomFormField>
@@ -149,10 +148,11 @@ const AddEditBook = (props: Props) => {
             >
               {(field) => (
                 <Textarea
+                  {...field}
                   placeholder="Description"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
-                  {...field}
+                  value={field.value as string}
                 />
               )}
             </CustomFormField>

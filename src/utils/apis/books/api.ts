@@ -1,5 +1,6 @@
-import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 import { Response, Request, PayloadPagination } from "@/utils/types/api";
+import { checkProperty, valueFormatData } from "@/utils/formatter";
+import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 import { Book, BookSchema } from ".";
 
 export const getBooks = async (params?: Request) => {
@@ -42,8 +43,8 @@ export const addBook = async (body: BookSchema) => {
     const formData = new FormData();
     let key: keyof typeof body;
     for (key in body) {
-      if (body[key]) {
-        formData.append(key, body[key]);
+      if (checkProperty(body[key])) {
+        formData.append(key, valueFormatData(body[key]));
       }
     }
 
@@ -64,8 +65,8 @@ export const updateBook = async (body: BookSchema, id_book: number) => {
     const formData = new FormData();
     let key: keyof typeof body;
     for (key in body) {
-      if (body[key]) {
-        formData.append(key, body[key]);
+      if (checkProperty(body[key])) {
+        formData.append(key, valueFormatData(body[key]));
       }
     }
 

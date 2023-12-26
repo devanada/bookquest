@@ -5,7 +5,13 @@ import {
   updateBook,
   deleteBook,
 } from "./api";
-import { bookSchema, Book, BookSchema } from "./types";
+import {
+  bookSchema,
+  addBookSchema,
+  editBookSchema,
+  Book,
+  BookSchema,
+} from "./types";
 import { sampleBooks, sampleFeaturedBooks } from "./sample-data";
 
 export {
@@ -15,6 +21,8 @@ export {
   updateBook,
   deleteBook,
   bookSchema,
+  addBookSchema,
+  editBookSchema,
   sampleBooks,
   sampleFeaturedBooks,
 };

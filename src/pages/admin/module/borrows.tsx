@@ -141,10 +141,10 @@ const AdminBorrows = () => {
         const { datas, ...rest } = result.payload;
         setBorrows(datas);
         setMeta(rest);
-      } catch (error: any) {
+      } catch (error) {
         toast({
           title: "Oops! Something went wrong.",
-          description: error.toString(),
+          description: (error as Error).message,
           variant: "destructive",
         });
       }
@@ -157,10 +157,10 @@ const AdminBorrows = () => {
       toast({
         description: result.message,
       });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Oops! Something went wrong.",
-        description: error.message.toString(),
+        description: (error as Error).message,
         variant: "destructive",
       });
     }

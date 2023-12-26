@@ -57,10 +57,10 @@ export function TokenProvider({ children }: Readonly<Props>) {
     try {
       const result = await getProfile();
       setUser(result.payload);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Oops! Something went wrong.",
-        description: error.message.toString(),
+        description: (error as Error).message,
         variant: "destructive",
       });
     }

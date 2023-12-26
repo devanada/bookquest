@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { BookSlider, BookSliderLoading } from "@/components/book-slider";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { BookCard, BookCardLoading } from "@/components/book-card";
 import { buttonVariants } from "@/components/ui/button";
-import { BookSlider, BookSliderLoading } from "@/components/book-slider";
+import { toast } from "@/components/ui/use-toast";
 import RiveWrapper from "@/components/rive";
 import Layout from "@/components/layout";
-import { toast } from "@/components/ui/use-toast";
 
 import { Book, getBooks } from "@/utils/apis/books";
 
@@ -30,10 +30,10 @@ const Home = () => {
     try {
       const result = await getBooks({ sort: "new", limit: 5 });
       setNewBooks(result.payload.datas);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Oops! Something went wrong.",
-        description: error.toString(),
+        description: (error as Error).message,
         variant: "destructive",
       });
     } finally {
@@ -46,10 +46,10 @@ const Home = () => {
     try {
       const result = await getBooks({ filter: "featured", limit: 5 });
       setFeaturedBooks(result.payload.datas);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Oops! Something went wrong.",
-        description: error.toString(),
+        description: (error as Error).message,
         variant: "destructive",
       });
     } finally {
@@ -62,10 +62,10 @@ const Home = () => {
     try {
       const result = await getBooks({ limit: 5 });
       setPopularBooks(result.payload.datas);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Oops! Something went wrong.",
-        description: error.toString(),
+        description: (error as Error).message,
         variant: "destructive",
       });
     } finally {

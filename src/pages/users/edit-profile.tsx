@@ -35,6 +35,7 @@ const EditProfile = () => {
       address: "",
       phone_number: "",
       password: "",
+      profile_picture: new File([], ""),
     },
   });
 
@@ -52,10 +53,10 @@ const EditProfile = () => {
         description: result.message,
       });
       navigate("/profile");
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Oops! Something went wrong.",
-        description: error.message.toString(),
+        description: (error as Error).message,
         variant: "destructive",
       });
     }
@@ -70,10 +71,10 @@ const EditProfile = () => {
       });
       changeToken();
       navigate("/login");
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Oops! Something went wrong.",
-        description: error.message.toString(),
+        description: (error as Error).message,
         variant: "destructive",
       });
     } finally {
@@ -92,21 +93,23 @@ const EditProfile = () => {
           >
             {(field) => (
               <Input
+                {...field}
                 placeholder="John Doe"
                 disabled={form.formState.isSubmitting || isLoading}
                 aria-disabled={form.formState.isSubmitting || isLoading}
-                {...field}
+                value={field.value as string}
               />
             )}
           </CustomFormField>
           <CustomFormField control={form.control} name="email" label="Email">
             {(field) => (
               <Input
+                {...field}
                 placeholder="name@mail.com"
                 type="email"
                 disabled={form.formState.isSubmitting || isLoading}
                 aria-disabled={form.formState.isSubmitting || isLoading}
-                {...field}
+                value={field.value as string}
               />
             )}
           </CustomFormField>
@@ -117,11 +120,12 @@ const EditProfile = () => {
           >
             {(field) => (
               <Input
+                {...field}
                 placeholder="Password"
                 type="password"
                 disabled={form.formState.isSubmitting || isLoading}
                 aria-disabled={form.formState.isSubmitting || isLoading}
-                {...field}
+                value={field.value as string}
               />
             )}
           </CustomFormField>
@@ -132,10 +136,11 @@ const EditProfile = () => {
           >
             {(field) => (
               <Input
+                {...field}
                 placeholder="Address"
                 disabled={form.formState.isSubmitting || isLoading}
                 aria-disabled={form.formState.isSubmitting || isLoading}
-                {...field}
+                value={field.value as string}
               />
             )}
           </CustomFormField>
@@ -146,11 +151,12 @@ const EditProfile = () => {
           >
             {(field) => (
               <Input
+                {...field}
                 placeholder="Phone Number"
                 type="tel"
                 disabled={form.formState.isSubmitting || isLoading}
                 aria-disabled={form.formState.isSubmitting || isLoading}
-                {...field}
+                value={field.value as string}
               />
             )}
           </CustomFormField>
@@ -164,7 +170,9 @@ const EditProfile = () => {
                 type="file"
                 disabled={form.formState.isSubmitting || isLoading}
                 aria-disabled={form.formState.isSubmitting || isLoading}
-                {...field}
+                onChange={(e) =>
+                  field.onChange(e.target.files ? e.target.files[0] : null)
+                }
               />
             )}
           </CustomFormField>

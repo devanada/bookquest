@@ -1,4 +1,5 @@
 import axiosWithConfig from "@/utils/apis/axiosWithConfig";
+import { checkProperty, valueFormatData } from "@/utils/formatter";
 import { Response } from "@/utils/types/api";
 import { ProfileType, ProfileUpdateType } from ".";
 
@@ -14,7 +15,15 @@ export const getProfile = async () => {
 
 export const updateProfile = async (body: ProfileUpdateType) => {
   try {
-    const response = await axiosWithConfig.put(`/users`, body);
+    const formData = new FormData();
+    let key: keyof typeof body;
+    for (key in body) {
+      if (checkProperty(body[key])) {
+        formData.append(key, valueFormatData(body[key]));
+      }
+    }
+
+    const response = await axiosWithConfig.put(`/users`, formData);
 
     return response.data as Response;
   } catch (error: any) {
