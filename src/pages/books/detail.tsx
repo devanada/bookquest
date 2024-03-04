@@ -84,7 +84,6 @@ const DetailBook = () => {
           <div className="flex-grow">
             <p>{book?.description}</p>
           </div>
-          <>{console.log(user)}</>
           {user.role === "user" && (
             <div className="flex gap-4 justify-center">
               <Button
