@@ -36,10 +36,10 @@ const EditProfile = () => {
   });
 
   useEffect(() => {
-    form.setValue("full_name", user.full_name!);
-    form.setValue("email", user.email!);
-    form.setValue("address", user.address!);
-    form.setValue("phone_number", user.phone_number!);
+    form.setValue("full_name", user?.full_name!);
+    form.setValue("email", user?.email!);
+    form.setValue("address", user?.address!);
+    form.setValue("phone_number", user?.phone_number!);
   }, [user]);
 
   async function onSubmit(data: ProfileSchema) {
