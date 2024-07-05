@@ -4,12 +4,13 @@ import { Link, useParams } from "react-router-dom";
 import NotFound from "@/pages/404";
 import { Separator } from "@/components/ui/separator";
 import { badgeVariants } from "@/components/ui/badge";
+import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout";
-import { useToast } from "@/components/ui/use-toast";
 
-import { Book, getDetailBook } from "@/utils/apis/books";
+import { getDetailBook } from "@/utils/apis/books";
 import { useToken } from "@/utils/contexts/token";
+import { IBook } from "@/utils/types/books";
 import useCartStore from "@/utils/state";
 
 const DetailBook = () => {
@@ -19,7 +20,7 @@ const DetailBook = () => {
   const { user } = useToken();
   const params = useParams();
 
-  const [book, setBook] = useState<Book>();
+  const [book, setBook] = useState<IBook>();
   const [isError, setIsError] = useState(false);
 
   const isInCart = useMemo(() => {
@@ -84,8 +85,7 @@ const DetailBook = () => {
           <div className="flex-grow">
             <p>{book?.description}</p>
           </div>
-          <>{console.log(user)}</>
-          {user.role === "user" && (
+          {user?.role === "user" ? (
             <div className="flex gap-4 justify-center">
               <Button
                 size="lg"
@@ -96,7 +96,7 @@ const DetailBook = () => {
                 {isInCart ? "In Cart" : "Borrow"}
               </Button>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </Layout>

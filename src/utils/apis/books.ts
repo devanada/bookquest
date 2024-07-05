@@ -1,7 +1,7 @@
 import { Response, Request, PayloadPagination } from "@/utils/types/api";
 import { checkProperty, valueFormatData } from "@/utils/formatter";
-import axiosWithConfig from "@/utils/apis/axiosWithConfig";
-import { Book, BookSchema } from ".";
+import axiosWithConfig from "@/utils/apis/axios-with-config";
+import { IBook, BookSchema } from "@/utils/types/books";
 
 export const getBooks = async (params?: Request) => {
   try {
@@ -22,7 +22,7 @@ export const getBooks = async (params?: Request) => {
 
     const response = await axiosWithConfig.get(url);
 
-    return response.data as Response<PayloadPagination<Book[]>>;
+    return response.data as Response<PayloadPagination<IBook[]>>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
@@ -32,7 +32,7 @@ export const getDetailBook = async (id_book: string) => {
   try {
     const response = await axiosWithConfig.get(`/books/${id_book}`);
 
-    return response.data as Response<Book>;
+    return response.data as Response<IBook>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }

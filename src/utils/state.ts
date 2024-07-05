@@ -1,10 +1,11 @@
 import { create } from "zustand";
-import { Book } from "./apis/books";
+
+import { IBook } from "@/utils/types/books";
 
 interface CartState {
-  cart: Book[];
-  addBook: (book: Book) => void;
-  deleteBook: (book: Book) => void;
+  cart: IBook[];
+  addBook: (book: IBook) => void;
+  deleteBook: (book: IBook) => void;
   removeCart: () => void;
 }
 

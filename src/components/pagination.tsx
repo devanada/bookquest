@@ -30,20 +30,21 @@ const Pagination = (props: Props) => {
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
-      {meta &&
-        pagesToDisplay.map((page, index) => {
-          return (
-            <Button
-              variant="outline"
-              size="icon"
-              key={`${page}-${index}`}
-              disabled={meta?.currentPage === page}
-              onClick={() => onClickPage(page)}
-            >
-              {page}
-            </Button>
-          );
-        })}
+      {meta
+        ? pagesToDisplay.map((page, index) => {
+            return (
+              <Button
+                variant="outline"
+                size="icon"
+                key={`${page}-${index}`}
+                disabled={meta?.currentPage === page}
+                onClick={() => onClickPage(page)}
+              >
+                {page}
+              </Button>
+            );
+          })
+        : null}
       <Button
         variant="outline"
         size="icon"

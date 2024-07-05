@@ -12,14 +12,8 @@ import { Input } from "@/components/ui/input";
 import Alert from "@/components/alert";
 import AddEditBook from "./add-edit-book";
 
-import {
-  Book,
-  BookSchema,
-  addBook,
-  deleteBook,
-  getBooks,
-  updateBook,
-} from "@/utils/apis/books";
+import { addBook, deleteBook, getBooks, updateBook } from "@/utils/apis/books";
+import { BookSchema, IBook } from "@/utils/types/books";
 import { Meta } from "@/utils/types/api";
 
 const AdminBooks = () => {
@@ -27,7 +21,7 @@ const AdminBooks = () => {
   const { toast } = useToast();
 
   const [searchValue, setSearchValue] = useState("");
-  const [books, setBooks] = useState<Book[]>([]);
+  const [books, setBooks] = useState<IBook[]>([]);
   const [meta, setMeta] = useState<Meta>();
 
   useEffect(() => {
@@ -47,7 +41,7 @@ const AdminBooks = () => {
     [searchParams]
   );
 
-  const columns = useMemo<ColumnDef<Book>[]>(
+  const columns = useMemo<ColumnDef<IBook>[]>(
     () => [
       {
         header: "No",

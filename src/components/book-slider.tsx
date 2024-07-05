@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { Book } from "@/utils/apis/books";
+import { IBook } from "@/utils/types/books";
 
 interface Props {
-  book: Book;
+  book: IBook;
   "data-testid"?: string;
 }
 

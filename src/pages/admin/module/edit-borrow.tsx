@@ -15,11 +15,11 @@ import { CustomFormDatePicker } from "@/components/custom-formfield";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 
-import { Borrow, BorrowPayload, borrowPayload } from "@/utils/apis/borrows";
+import { IBorrow, BorrowPayload, borrowPayload } from "@/utils/types/borrows";
 
 interface Props {
   children: ReactNode;
-  editData: Borrow;
+  editData: IBorrow;
   onSubmit: (data: BorrowPayload) => void;
 }
 

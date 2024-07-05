@@ -1,8 +1,10 @@
 import * as z from "zod";
 
-const MAX_MB = 2;
-const MAX_UPLOAD_SIZE = 1024 * 1024 * MAX_MB;
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+import {
+  ACCEPTED_IMAGE_TYPES,
+  MAX_MB,
+  MAX_UPLOAD_SIZE,
+} from "@/utils/constant";
 
 const base = z.object({
   title: z.string().min(1, { message: "Title is required" }),
@@ -57,7 +59,7 @@ export const bookSchema = z.discriminatedUnion("mode", [
 ]);
 
 export type BookSchema = z.infer<typeof bookSchema>;
-export interface Book {
+export interface IBook {
   id: number;
   title: string;
   author: string;

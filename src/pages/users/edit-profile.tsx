@@ -5,20 +5,16 @@ import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
 import { CustomFormField } from "@/components/custom-formfield";
+import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form } from "@/components/ui/form";
 import Layout from "@/components/layout";
 import Alert from "@/components/alert";
-import { useToast } from "@/components/ui/use-toast";
 
+import { profileSchema, ProfileSchema } from "@/utils/types/users";
+import { updateProfile, deleteProfile } from "@/utils/apis/users";
 import { useToken } from "@/utils/contexts/token";
-import {
-  updateProfile,
-  deleteProfile,
-  ProfileUpdateType,
-  profileUpdateSchema,
-} from "@/utils/apis/users";
 
 const EditProfile = () => {
   const { user, changeToken } = useToken();
@@ -27,8 +23,8 @@ const EditProfile = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<ProfileUpdateType>({
-    resolver: zodResolver(profileUpdateSchema),
+  const form = useForm<ProfileSchema>({
+    resolver: zodResolver(profileSchema),
     defaultValues: {
       full_name: "",
       email: "",
@@ -46,7 +42,7 @@ const EditProfile = () => {
     form.setValue("phone_number", user.phone_number!);
   }, [user]);
 
-  async function onSubmit(data: ProfileUpdateType) {
+  async function onSubmit(data: ProfileSchema) {
     try {
       const result = await updateProfile(data);
       toast({

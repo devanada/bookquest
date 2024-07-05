@@ -7,17 +7,18 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout";
 import { toast } from "@/components/ui/use-toast";
 
-import { getBorrows, Borrow } from "@/utils/apis/borrows";
+import { getBorrows } from "@/utils/apis/borrows";
 import { useToken } from "@/utils/contexts/token";
+import { IBorrow } from "@/utils/types/borrows";
 
 const Profile = () => {
   const { user } = useToken();
 
-  const [recentlyBorrow, setRecentlyBorrow] = useState<Borrow[]>([]);
+  const [recentlyBorrow, setRecentlyBorrow] = useState<IBorrow[]>([]);
   const [isLoadingBorrows, setIsLoadingBorrows] = useState(true);
 
   useEffect(() => {
-    user.role === "user" && fetchData();
+    user?.role === "user" && fetchData();
   }, [user]);
 
   async function fetchData() {
@@ -42,16 +43,16 @@ const Profile = () => {
         <div className="w-60 h-60">
           <img
             className="aspect-square rounded-full object-cover"
-            src={user.profile_picture}
-            alt={`${user.full_name}'s profile picture`}
+            src={user?.profile_picture}
+            alt={`${user?.full_name}'s profile picture`}
           />
         </div>
-        <p className="font-bold text-2xl">{user.full_name}</p>
+        <p className="font-bold text-2xl">{user?.full_name}</p>
         <Button asChild>
           <Link to="/edit-profile">Edit Profile</Link>
         </Button>
       </div>
-      {user.role === "user" && (
+      {user?.role === "user" ? (
         <>
           <div className="flex justify-between my-9 w-full items-center">
             <p className="font-semibold text-lg tracking-wider">
@@ -80,7 +81,7 @@ const Profile = () => {
             </ScrollArea>
           </div>
         </>
-      )}
+      ) : null}
     </Layout>
   );
 };

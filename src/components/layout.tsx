@@ -1,8 +1,11 @@
+import { useLoaderData } from "react-router-dom";
 import { ReactNode } from "react";
 import clsx from "clsx";
 
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+
+import useTitle from "@/utils/hooks/use-title";
 
 interface Props {
   children: ReactNode;
@@ -12,6 +15,8 @@ interface Props {
 
 const Layout = (props: Readonly<Props>) => {
   const { children, centerY = false, centerX = false } = props;
+  const loaderData = useLoaderData() as string;
+  useTitle(loaderData);
 
   return (
     <div className="w-full h-screen bg-white dark:bg-black text-gray-900 dark:text-white overflow-auto font-roboto flex flex-col">

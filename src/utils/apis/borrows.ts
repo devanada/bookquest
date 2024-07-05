@@ -1,7 +1,6 @@
-import axiosWithConfig from "@/utils/apis/axiosWithConfig";
+import { IBorrow, BorrowPayload, BorrowSchema } from "@/utils/types/borrows";
 import { Response, Request, PayloadPagination } from "@/utils/types/api";
-import { Borrow } from ".";
-import { BorrowPayload, BorrowSchema } from "./types";
+import axiosWithConfig from "@/utils/apis/axios-with-config";
 
 export const getBorrows = async (params?: Request) => {
   try {
@@ -22,17 +21,17 @@ export const getBorrows = async (params?: Request) => {
 
     const response = await axiosWithConfig.get(url);
 
-    return response.data as Response<PayloadPagination<Borrow[]>>;
+    return response.data as Response<PayloadPagination<IBorrow[]>>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
 };
 
-export const getDetailBook = async (id_book: string) => {
+export const getDetailBorrow = async (id_book: string) => {
   try {
     const response = await axiosWithConfig.get(`/borrows/${id_book}`);
 
-    return response.data as Response<Borrow>;
+    return response.data as Response<IBorrow>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }

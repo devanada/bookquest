@@ -3,6 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
+import { CustomFormField } from "@/components/custom-formfield";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
+import Layout from "@/components/layout";
 import {
   Card,
   CardContent,
@@ -11,20 +17,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CustomFormField } from "@/components/custom-formfield";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Form } from "@/components/ui/form";
-import Layout from "@/components/layout";
-import { useToast } from "@/components/ui/use-toast";
 
-import { RegisterType, registerSchema, userRegister } from "@/utils/apis/auth";
+import { registerSchema, RegisterSchema } from "@/utils/types/auth";
+import { userRegister } from "@/utils/apis/auth";
 
 const Register = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const form = useForm<RegisterType>({
+  const form = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       full_name: "",
@@ -36,7 +37,7 @@ const Register = () => {
     },
   });
 
-  async function onSubmit(data: RegisterType) {
+  async function onSubmit(data: RegisterSchema) {
     try {
       const result = await userRegister(data);
       toast({

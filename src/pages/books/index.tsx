@@ -1,6 +1,10 @@
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import { BookCard, BookCardLoading } from "@/components/book-card";
+import { useToast } from "@/components/ui/use-toast";
+import Pagination from "@/components/pagination";
+import Layout from "@/components/layout";
 import {
   Select,
   SelectContent,
@@ -8,12 +12,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/components/ui/use-toast";
-import Pagination from "@/components/pagination";
-import { BookCard, BookCardLoading } from "@/components/book-card";
-import Layout from "@/components/layout";
 
-import { Book, getBooks } from "@/utils/apis/books";
+import { getBooks } from "@/utils/apis/books";
+import { IBook } from "@/utils/types/books";
 import { Meta } from "@/utils/types/api";
 
 const AllBook = () => {
@@ -21,7 +22,7 @@ const AllBook = () => {
   const { toast } = useToast();
 
   const [isLoadingBooks, setIsLoadingBooks] = useState(true);
-  const [books, setBooks] = useState<Book[]>([]);
+  const [books, setBooks] = useState<IBook[]>([]);
   const [meta, setMeta] = useState<Meta>();
 
   useEffect(() => {

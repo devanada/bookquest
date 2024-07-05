@@ -1,5 +1,7 @@
 import * as z from "zod";
 
+import { IRole } from "@/utils/constant";
+
 export const loginSchema = z.object({
   email: z
     .string()
@@ -21,7 +23,7 @@ export const registerSchema = z
     repassword: z
       .string()
       .min(6, { message: "Retype password must be at least 6 characters" }),
-    role: z.string().default("user"),
+    role: z.nativeEnum(IRole).default(IRole.User),
     address: z.string().min(1, { message: "Address is required" }),
     phone_number: z
       .string()
@@ -32,5 +34,5 @@ export const registerSchema = z
     path: ["repassword"],
   });
 
-export type LoginType = z.infer<typeof loginSchema>;
-export type RegisterType = z.infer<typeof registerSchema>;
+export type LoginSchema = z.infer<typeof loginSchema>;
+export type RegisterSchema = z.infer<typeof registerSchema>;

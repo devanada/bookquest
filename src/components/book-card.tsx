@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { Book } from "@/utils/apis/books/types";
+import { IBook } from "@/utils/types/books";
 
 interface BookCardProps {
-  data: Book;
+  data: IBook;
   navigate: string;
   "data-testid"?: string;
 }

@@ -4,8 +4,8 @@ import { Mocked, vi } from "vitest";
 import { render, screen, within, fireEvent, act } from "@/__tests__/test-utils";
 
 import App from "@/pages/index";
-import axiosWithConfig from "@/utils/apis/axiosWithConfig";
-import { sampleBooks, sampleFeaturedBooks } from "@/utils/apis/books";
+import axiosWithConfig from "@/utils/apis/axios-with-config";
+import { sampleBooks, sampleFeaturedBooks } from "@/utils/datas/books";
 
 vi.mock("@/utils/apis/axiosWithConfig");
 

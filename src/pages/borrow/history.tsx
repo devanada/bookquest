@@ -6,7 +6,8 @@ import { BookCard, BookCardLoading } from "@/components/book-card";
 import Pagination from "@/components/pagination";
 import Layout from "@/components/layout";
 
-import { getBorrows, Borrow } from "@/utils/apis/borrows";
+import { getBorrows } from "@/utils/apis/borrows";
+import { IBorrow } from "@/utils/types/borrows";
 import { Meta } from "@/utils/types/api";
 
 const History = () => {
@@ -14,7 +15,7 @@ const History = () => {
   const { toast } = useToast();
 
   const [isLoadingBorrows, setIsLoadingBorrows] = useState(true);
-  const [borrows, setBorrows] = useState<Borrow[]>([]);
+  const [borrows, setBorrows] = useState<IBorrow[]>([]);
   const [meta, setMeta] = useState<Meta>();
 
   useEffect(() => {

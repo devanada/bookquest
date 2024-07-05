@@ -12,20 +12,15 @@ import { Input } from "@/components/ui/input";
 import Alert from "@/components/alert";
 import AddEditBorrow from "./edit-borrow";
 
-import {
-  getBorrows,
-  updateBorrow,
-  deleteBorrow,
-  Borrow,
-  BorrowPayload,
-} from "@/utils/apis/borrows";
+import { getBorrows, updateBorrow, deleteBorrow } from "@/utils/apis/borrows";
+import { BorrowPayload, IBorrow } from "@/utils/types/borrows";
 import { Meta } from "@/utils/types/api";
 
 const AdminBorrows = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
 
-  const [borrows, setBorrows] = useState<Borrow[]>([]);
+  const [borrows, setBorrows] = useState<IBorrow[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const [meta, setMeta] = useState<Meta>();
 
@@ -46,7 +41,7 @@ const AdminBorrows = () => {
     [searchParams]
   );
 
-  const columns = useMemo<ColumnDef<Borrow>[]>(
+  const columns = useMemo<ColumnDef<IBorrow>[]>(
     () => [
       {
         header: "No",

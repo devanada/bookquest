@@ -9,12 +9,13 @@ import { toast } from "@/components/ui/use-toast";
 import RiveWrapper from "@/components/rive";
 import Layout from "@/components/layout";
 
-import { Book, getBooks } from "@/utils/apis/books";
+import { getBooks } from "@/utils/apis/books";
+import { IBook } from "@/utils/types/books";
 
 const Home = () => {
-  const [featuredBooks, setFeaturedBooks] = useState<Book[]>([]);
-  const [popularBooks, setPopularBooks] = useState<Book[]>([]);
-  const [newBooks, setNewBooks] = useState<Book[]>([]);
+  const [featuredBooks, setFeaturedBooks] = useState<IBook[]>([]);
+  const [popularBooks, setPopularBooks] = useState<IBook[]>([]);
+  const [newBooks, setNewBooks] = useState<IBook[]>([]);
   const [isLoadingNew, setIsLoadingNew] = useState(true);
   const [isLoadingFeatured, setIsLoadingFeatured] = useState(true);
   const [isLoadingOther, setIsLoadingOther] = useState(true);

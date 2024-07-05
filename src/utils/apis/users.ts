@@ -1,19 +1,19 @@
-import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 import { checkProperty, valueFormatData } from "@/utils/formatter";
+import { IUser, ProfileSchema } from "@/utils/types/users";
+import axiosWithConfig from "@/utils/apis/axios-with-config";
 import { Response } from "@/utils/types/api";
-import { ProfileType, ProfileUpdateType } from ".";
 
 export const getProfile = async () => {
   try {
     const response = await axiosWithConfig.get(`/users`);
 
-    return response.data as Response<ProfileType>;
+    return response.data as Response<IUser>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
 };
 
-export const updateProfile = async (body: ProfileUpdateType) => {
+export const updateProfile = async (body: ProfileSchema) => {
   try {
     const formData = new FormData();
     let key: keyof typeof body;

@@ -1,12 +1,12 @@
-import axiosWithConfig from "@/utils/apis/axiosWithConfig";
+import { LoginSchema, RegisterSchema } from "@/utils/types/auth";
+import axiosWithConfig from "@/utils/apis/axios-with-config";
 import { Response } from "@/utils/types/api";
-import { LoginType, RegisterType } from ".";
 
 interface LoginPayload {
   token: string;
 }
 
-export const userLogin = async (body: LoginType) => {
+export const userLogin = async (body: LoginSchema) => {
   try {
     const response = await axiosWithConfig.post(`/login`, body);
 
@@ -16,7 +16,7 @@ export const userLogin = async (body: LoginType) => {
   }
 };
 
-export const userRegister = async (body: RegisterType) => {
+export const userRegister = async (body: RegisterSchema) => {
   try {
     const response = await axiosWithConfig.post(`/register`, body);
 

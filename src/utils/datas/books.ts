@@ -1,6 +1,6 @@
-import { Book } from ".";
+import { IBook } from "@/utils/types/books";
 
-export const sampleFeaturedBooks: Book[] = [
+export const sampleFeaturedBooks: IBook[] = [
   {
     id: 1,
     title: "To Kill a Mockingbird",
@@ -48,7 +48,7 @@ export const sampleFeaturedBooks: Book[] = [
   },
 ];
 
-export const sampleBooks: Book[] = [
+export const sampleBooks: IBook[] = [
   {
     id: 1,
     title: "To Kill a Mockingbird",

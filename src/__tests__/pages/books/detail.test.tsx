@@ -4,9 +4,9 @@ import { Mocked, vi } from "vitest";
 import { render, screen, within, act } from "@/__tests__/test-utils";
 
 import App from "@/pages/books/detail";
-import axiosWithConfig from "@/utils/apis/axiosWithConfig";
-import { sampleBooks } from "@/utils/apis/books";
-import { RoleType } from "@/utils/apis/users";
+import axiosWithConfig from "@/utils/apis/axios-with-config";
+import { sampleBooks } from "@/utils/datas/books";
+import { IRole } from "@/utils/constant";
 import * as token from "@/utils/contexts/token";
 
 vi.mock("@/utils/apis/axiosWithConfig");
@@ -27,7 +27,7 @@ const userData = {
   id: 3,
   full_name: "Test",
   email: "test@mail.com",
-  role: "user" as RoleType,
+  role: "user" as IRole,
   profile_picture: "image_url",
   address: "test",
   phone_number: "6282222222222",
@@ -108,7 +108,7 @@ describe("Detail Page", () => {
     });
 
     it("should not render borrow button when not logged in", async () => {
-      const emptyToken = { token: "", user: {}, changeToken: vi.fn() };
+      const emptyToken = { token: "", user: undefined, changeToken: vi.fn() };
       vi.spyOn(token, "useToken").mockReturnValue(emptyToken);
 
       await act(async () => {
@@ -121,7 +121,7 @@ describe("Detail Page", () => {
     it("should not render borrow button when role is admin", async () => {
       const emptyToken = {
         token: "accessToken",
-        user: { ...userData, role: "admin" as RoleType },
+        user: { ...userData, role: "admin" as IRole },
         changeToken: vi.fn(),
       };
       vi.spyOn(token, "useToken").mockReturnValue(emptyToken);

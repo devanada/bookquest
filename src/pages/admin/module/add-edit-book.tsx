@@ -3,6 +3,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
+import {
+  CustomFormField,
+  CustomFormSelect,
+} from "@/components/custom-formfield";
 import {
   Dialog,
   DialogContent,
@@ -11,21 +19,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  CustomFormField,
-  CustomFormSelect,
-} from "@/components/custom-formfield";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Form } from "@/components/ui/form";
 
-import { Book, BookSchema, bookSchema } from "@/utils/apis/books";
+import { bookSchema, BookSchema, IBook } from "@/utils/types/books";
 import { categories } from "@/utils/constant";
 
 interface Props {
   children: ReactNode;
-  editData?: Book;
+  editData?: IBook;
   onSubmit: (data: BookSchema) => void;
 }
 

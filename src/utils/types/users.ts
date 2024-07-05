@@ -1,10 +1,13 @@
 import * as z from "zod";
 
-const MAX_MB = 2;
-const MAX_UPLOAD_SIZE = 1024 * 1024 * MAX_MB;
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+import {
+  ACCEPTED_IMAGE_TYPES,
+  IRole,
+  MAX_MB,
+  MAX_UPLOAD_SIZE,
+} from "@/utils/constant";
 
-export const profileUpdateSchema = z.object({
+export const profileSchema = z.object({
   email: z
     .string()
     .min(1, { message: "Email is required" })
@@ -27,15 +30,13 @@ export const profileUpdateSchema = z.object({
     .optional(),
 });
 
-export type RoleType = "user" | "admin";
-
-export interface ProfileType {
+export interface IUser {
   id: number;
   full_name: string;
   email: string;
-  role: RoleType;
+  role: IRole;
   profile_picture: string;
   address: string;
   phone_number: string;
 }
-export type ProfileUpdateType = z.infer<typeof profileUpdateSchema>;
+export type ProfileSchema = z.infer<typeof profileSchema>;

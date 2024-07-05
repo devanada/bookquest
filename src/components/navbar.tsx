@@ -2,6 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { ShoppingBasket } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useToast } from "@/components/ui/use-toast";
+import Combobox from "@/components/combobox";
+import Cart from "@/components/cart";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,9 +17,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Combobox from "@/components/combobox";
-import Cart from "@/components/cart";
-import { useToast } from "@/components/ui/use-toast";
 
 import { useToken } from "@/utils/contexts/token";
 import { useTheme } from "@/utils/contexts/theme";
@@ -45,27 +45,30 @@ const Navbar = () => {
         </Link>
         <div className="flex gap-4 items-center justify-end">
           <Combobox placeholder="Search books..." />
-          {token && user.role === "user" && (
+          {token && user?.role === "user" ? (
             <Cart>
               <ShoppingBasket />
             </Cart>
-          )}
+          ) : null}
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar>
-                <AvatarImage src={user.profile_picture} alt={user.full_name} />
+                <AvatarImage
+                  src={user?.profile_picture}
+                  alt={user?.full_name}
+                />
                 <AvatarFallback>BQ</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-44" align="end" forceMount>
-              {token && (
+              {token ? (
                 <>
-                  <DropdownMenuLabel>Hi! {user.full_name}</DropdownMenuLabel>
+                  <DropdownMenuLabel>Hi! {user?.full_name}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => navigate("/profile")}>
                     Profile
                   </DropdownMenuItem>
-                  {user.role === "user" ? (
+                  {user?.role === "user" ? (
                     <DropdownMenuItem
                       onClick={() => navigate("/history-borrow")}
                     >
@@ -77,7 +80,7 @@ const Navbar = () => {
                     </DropdownMenuItem>
                   )}
                 </>
-              )}
+              ) : null}
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>Theme</DropdownMenuSubTrigger>
                 <DropdownMenuPortal>

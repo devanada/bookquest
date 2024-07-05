@@ -3,6 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
+import { CustomFormField } from "@/components/custom-formfield";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
+import Layout from "@/components/layout";
 import {
   Card,
   CardContent,
@@ -11,22 +17,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CustomFormField } from "@/components/custom-formfield";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Form } from "@/components/ui/form";
-import Layout from "@/components/layout";
-import { useToast } from "@/components/ui/use-toast";
 
-import { LoginType, loginSchema, userLogin } from "@/utils/apis/auth";
+import { loginSchema, LoginSchema } from "@/utils/types/auth";
 import { useToken } from "@/utils/contexts/token";
+import { userLogin } from "@/utils/apis/auth";
 
 const Login = () => {
   const { changeToken } = useToken();
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const form = useForm<LoginType>({
+  const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
@@ -34,7 +35,7 @@ const Login = () => {
     },
   });
 
-  async function onSubmit(data: LoginType) {
+  async function onSubmit(data: LoginSchema) {
     try {
       const result = await userLogin(data);
       changeToken(result.payload?.token);
