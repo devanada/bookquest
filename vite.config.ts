@@ -6,11 +6,11 @@ import { defineConfig } from "vite";
 
 const manifestForPlugin: Partial<VitePWAOptions> = {
   registerType: "prompt",
-  includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
+  includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.png"],
   manifest: {
-    name: "Weather Ups",
-    short_name: "Weathe Ups",
-    description: "An app that can show weather forecast for your city.",
+    name: "BookQuest",
+    short_name: "BookQuest",
+    description: "Discover and borrow thousands of books at your fingertips.",
     icons: [
       {
         src: "/android-chrome-192x192.png",
